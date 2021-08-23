@@ -27,7 +27,7 @@ Identical application to the `Secure Application`, except it is only deployed in
 ### Multi-Cluster Bookinfo Application
 This is the canonical [Istio demo application, Bookinfo.](https://istio.io/latest/docs/examples/bookinfo/)  The microservice application displays information about a book, similar to a single catalog entry of an online book store.  This application spans is fully deployed to both on-premises clusters and only one of its microservices deployed to the Public Cloud West cluster.  In this manner, we can demonstrate advanced routing and service discovery patterns.
 
-TODO -- APp image ![Base Diagram](images/bookinfo.png)
+![Base Diagram](images/bookinfo-app.png)
 
 ![Base Diagram](images/bookinfo-app-arch.png)
 
