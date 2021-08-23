@@ -8,6 +8,8 @@ The target state infrastucture archiecture is comprised of 5 kubernetes clusters
 
 ![Base Diagram](images/infra-arch.png)
 
+## Applications
+
 During this workshop we will be modeling 3 different applications that allow for various architecture and security patterns that span Multi-Cluster and Multi-Cloud.
 
 ### Secure Application
