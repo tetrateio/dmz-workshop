@@ -1,0 +1,12 @@
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: $PREFIX-tsb-gateway
+  namespace: $PREFIX-demo-secure
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "$PREFIX-secure.public.cloud.zwickey.net."
