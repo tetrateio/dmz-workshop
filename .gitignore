@@ -1,0 +1,4 @@
+.DS_Store
+
+# This folder has customized YAML I don't want to checkin
+scratch/

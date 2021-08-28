@@ -34,9 +34,14 @@ This is the canonical [Istio demo application, Bookinfo.](https://istio.io/lates
 ## Workshop Topics
 IMPORTANT: Each new exercise builds upon the preceding lab, so please do not skip around the labs!
 
-- TOPIC
-    - Content
-    - Lab
+- Deploy Applications: [Lab](00-App-Deployment/README.md)
+- Setup Multi-Tenancy: Slides [Lab](01-Tenancy/README.md)
+- Application Config: Slides [Lab](02-App-Config/README.md)
+- Security Policies: Slides [Lab](03-Security/README.md)
+- Legacy VM Workloads: Slides [Lab](04-VM/README.md)
+- Multi-Cloud & Multi-Cluster Traffic Mgmt: Slides [Lab](05-LB/README.md)
+- Application Debugging: Slides [Lab](05-Debugging/README.md)
+- Envoy Filters: Slides [Lab](06-Envoy/README.md)
 
 
 ## Prerequisites & Environment Setup
