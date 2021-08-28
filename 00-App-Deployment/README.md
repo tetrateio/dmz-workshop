@@ -71,5 +71,26 @@ Open your browser and navigate to localhost:8888.  Enter `backend` in the Backen
 ![Base Diagram](../images/01-app.png)
 
 ### Secure Application
+The secure application is identical to the secure application, with the exceeption that it is deployed to 3 different kubernetes clusters that are part of a different trust domain.  
+
+1 - Ensure your kube context is targeted the `public cloud west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
+```bash
+envsubst < 00-App-Deployment/cloud-west/app.yaml | kubectl apply -f -
+envsubst < 00-App-Deployment/cloud-west/cluster-ingress-gw.yaml | kubectl apply -f -
+```
+
+2 - Ensure your kube context is targeted the `private east` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
+```bash
+envsubst < 00-App-Deployment/private-east/app.yaml | kubectl apply -f -
+envsubst < 00-App-Deployment/private-east/cluster-ingress-gw.yaml | kubectl apply -f -
+```
+
+3 - Ensure your kube context is targeted the `private west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
+```bash
+envsubst < 00-App-Deployment/private-west/app.yaml | kubectl apply -f -
+envsubst < 00-App-Deployment/private-west/cluster-ingress-gw.yaml | kubectl apply -f -
+```
+
+You can verify the secure verison of the application utilizing the same method of `kubectl port-forward` described in the previous section.
 
 ### Bookinfo Application

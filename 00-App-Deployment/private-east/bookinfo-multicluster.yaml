@@ -18,7 +18,12 @@ metadata:
   name: $PREFIX-bookinfo
   labels:
     istio-injection: enabled
-
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: istio-cni
+  namespace: $PREFIX-bookinfo
 ---
 ##################################################################################################
 # Details service

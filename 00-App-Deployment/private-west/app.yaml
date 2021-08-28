@@ -6,6 +6,12 @@ metadata:
   labels:
     istio-injection: enabled
 ---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: istio-cni
+  namespace: $PREFIX-demo-secure
+---
 apiVersion: v1
 kind: Service
 metadata:
