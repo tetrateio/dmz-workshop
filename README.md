@@ -8,6 +8,18 @@ The target state infrastucture archiecture is comprised of 5 kubernetes clusters
 
 ![Base Diagram](images/infra-arch.png)
 
+## Workshop Topics
+IMPORTANT: Each new exercise builds upon the preceding lab, so please do not skip around the labs!
+
+- Deploy Applications: [Lab](00-App-Deployment/README.md)
+- Setup Multi-Tenancy: Slides [Lab](01-Tenancy/README.md)
+- Application Config: Slides [Lab](02-App-Config/README.md)
+- Security Policies: Slides [Lab](03-Security/README.md)
+- Legacy VM Workloads: Slides [Lab](04-VM/README.md)
+- Multi-Cloud & Multi-Cluster Traffic Mgmt: Slides [Lab](05-LB/README.md)
+- Application Debugging: Slides [Lab](05-Debugging/README.md)
+- Envoy Filters: Slides [Lab](06-Envoy/README.md)
+
 ## Applications
 
 During this workshop we will be modeling 3 different applications that allow for various architecture and security patterns that span Multi-Cluster and Multi-Cloud.
@@ -30,18 +42,6 @@ This is the canonical [Istio demo application, Bookinfo.](https://istio.io/lates
 ![Base Diagram](images/bookinfo-app.png)
 
 ![Base Diagram](images/bookinfo-app-arch.png)
-
-## Workshop Topics
-IMPORTANT: Each new exercise builds upon the preceding lab, so please do not skip around the labs!
-
-- Deploy Applications: [Lab](00-App-Deployment/README.md)
-- Setup Multi-Tenancy: Slides [Lab](01-Tenancy/README.md)
-- Application Config: Slides [Lab](02-App-Config/README.md)
-- Security Policies: Slides [Lab](03-Security/README.md)
-- Legacy VM Workloads: Slides [Lab](04-VM/README.md)
-- Multi-Cloud & Multi-Cluster Traffic Mgmt: Slides [Lab](05-LB/README.md)
-- Application Debugging: Slides [Lab](05-Debugging/README.md)
-- Envoy Filters: Slides [Lab](06-Envoy/README.md)
 
 
 ## Prerequisites & Environment Setup
