@@ -1,0 +1,90 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+  workspace: $PREFIX-insecure-app
+  name: insecure-gateway-cloud
+spec:
+  displayName: insecure-gateway-cloud
+  description: insecure-gateway-cloud
+  namespaceSelector:
+    names:
+      - "cloud-east/$PREFIX-demo-insecure"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+  workspace: $PREFIX-secure-app
+  name: secure-gateway-cloud
+spec:
+  displayName: secure-gateway-cloud
+  description: secure-gateway-cloud
+  namespaceSelector:
+    names:
+      - "cloud-west/$PREFIX-demo-secure"
+  configMode: BRIDGED  
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+  workspace: $PREFIX-secure-app
+  name: east-gateway-private
+spec:
+  displayName: east-gateway-private
+  description: east-gateway-private
+  namespaceSelector:
+    names:
+      - "private-east/$PREFIX-demo-secure"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+  workspace: $PREFIX-secure-app
+  name: west-gateway-private
+spec:
+  displayName: west-gateway-private
+  description: west-gateway-private
+  namespaceSelector:
+    names:
+      - "private-west/$PREFIX-demo-secure"
+  configMode: BRIDGED  
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+  workspace: $PREFIX-dmz
+  name: gateway
+spec:
+  displayName: gateway
+  description: gateway
+  namespaceSelector:
+    names:
+      - "dmz/$PREFIX-dmz"
+  configMode: BRIDGED 
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+  workspace: $PREFIX-secure-bookinfo
+  name: bookinfo-gateways
+spec:
+  displayName: bookinfo-gateways
+  description: bookinfo-gateways
+  namespaceSelector:
+    names:
+      - "*/$PREFIX-bookinfo"
+  configMode: BRIDGED

@@ -7,15 +7,10 @@ The first step will be to deploy all our sample applications. As a reminder, we'
 The steps to deploy the applications are largely identical; the main change will be ensuring that you are targeting the correct kubernetes cluster in your kube context file.
 
 ## Application Deployment
-Prior to installing ensure you have set an environment variable in the shell you are using named `PREFIX`.  This will be used to prefix common objects, such as namespaces, dns entries, TSB tenants and workspaces, etc such that your appliations and configuration will not collide with others running this workshop on shared infrastructure.
-
-You will also want to ensure that your `tctl` CLI is targeted and logged into the TSB management plane.
+Prior to installing ensure you have set an environment variable in the shell you are using named `PREFIX`.  The value you should use will be provided to you by by Tetrate.  This will be used to prefix common objects, such as namespaces, dns entries, TSB tenants and workspaces, etc such that your appliations and configuration will not collide with others running this workshop on shared infrastructure.
 
 ```bash
 export PREFIX=abz
-
-tctl config clusters set default --bridge-address <TSB-MGMT-PLANE-ADDRESS>:443
-tctl login --org tetrate --tenant $PREFIX-tetrate --username <TSB-USER> --password <TSB-PWD>
 ```
 
 ### Insecure Application
