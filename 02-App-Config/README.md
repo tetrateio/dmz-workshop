@@ -71,6 +71,8 @@ Open your browser and navigate to https://$PREFIX-insecure.public.cloud.zwickey.
 
 Click that back button and this time enter the internal address for the backend running in the *public cloud west* Cluster -- `$PREFIX.secure.public.mesh `.  The frontend application will use global service discovery to find the application running in a completely different kubernetes cluster.  It will then utilize the mesh to route securely via mTLS to call the backend service in the cluster.  The reponse you see in the frontend application UI will confirm which cluster responsed to the frontend.
 
+![Base Diagram](../images/02-app.png)
+
 How did this work?  Change your kubecontext to the public cloud east cluster, which is where the frontend application you tested with is running.  You can view the global config that was automatically distributed across the mesh by executing the following command to show `ServiceEntries` that were created.  This configuration instructs the frontend's service mesh sidecar how to connect to the backend running on a different cluster.
 
 ```bash
