@@ -1,0 +1,34 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: insecure-gateway
+  group: insecure-gateway-cloud
+  workspace: $PREFIX-insecure-app
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+spec:
+  workloadSelector:
+    namespace: $PREFIX-demo-insecure
+    labels:
+      app: $PREFIX-tsb-gateway
+  http:
+    - name: east-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-certs
+      hostname: $PREFIX-insecure.public.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-demo-insecure/frontend.$PREFIX-demo-insecure.svc.cluster.local"
+              port: 8888
+    - name: east-backend-internal
+      port: 80
+      hostname: $PREFIX.insecure.public.mesh
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-demo-insecure/backend.$PREFIX-demo-insecure.svc.cluster.local"
+              port: 80
