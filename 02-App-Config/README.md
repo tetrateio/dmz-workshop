@@ -104,6 +104,6 @@ Spec:
 ...
 ```
 
-Lasly, one more time click that back button and this time enter the internal address for the backend running in one of the *private cloud * Clusters -- `$PREFIX-west.secure.private.mesh`.  This time the frontend will fail.  Why is that?  We have not configured the DMZ to facilitate communication that transits through the DMZ, which is needed for Public->Private cloud communication (or visa versa).  We'll configure that in the next lab.
+Lasly, one more time click that back button and this time enter the internal address for the backend running in one of the *private cloud* Clusters -- `$PREFIX-west.secure.private.mesh`.  This time the frontend will fail.  Why is that?  We have not configured the DMZ to facilitate communication that transits through the DMZ, which is needed for Public->Private cloud communication (or visa versa).  We'll configure that in the next lab.
 
 Additionally, at this point you may be wondering why the *insecure* app was able to communicate with the *secure* app.  Shouldn't this be prohibited?  Absolutely!  Our application workspaces for the both the secure and insecure applications were purposefully configured with no default policy for global mesh authentication and authorization.  We'll also lock down our secure apps in the next lab.
