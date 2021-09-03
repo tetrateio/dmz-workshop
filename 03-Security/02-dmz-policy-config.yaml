@@ -1,0 +1,30 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Tier1Gateway
+metadata:
+  name: gateway
+  group: gateway
+  workspace: $PREFIX-dmz
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+spec:
+  workloadSelector:
+    namespace: $PREFIX-dmz
+    labels:
+      app: $PREFIX-dmz-gateway
+  internalServers:
+  - hostname: $PREFIX-east.secure.private.mesh
+    name: east-private
+  - hostname: $PREFIX-west.secure.private.mesh
+    name: west-private
+  externalServers:
+  - hostname: $PREFIX-east.secure.private.mesh
+    name: east-private
+    port: 80
+    tls:
+      mode: DISABLED
+  - hostname: $PREFIX-west.secure.private.mesh
+    name: west-private
+    port: 80
+    tls:
+      mode: DISABLED

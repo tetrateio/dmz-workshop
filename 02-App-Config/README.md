@@ -2,7 +2,7 @@
 Up until this point we have deployed our applications and setup multi-tenancy within TSB.  However, the applications are not accessible external to the kubernetes clusters and the are not configured to take full advantage of the global service mesh.  Typically within an Istio service mesh, applications must be configured with `Gateways`, `VirtualServices`, `DestinationRules`, and `ServiceEntries` to control traffic.  TSB simplifies this greatly.
 
 ## Configuring Applications within TSB
-As we ensured with our privous labs, prior to continuing ensure you have set an environment variable in the shell you are using named `PREFIX`.  You will also want to ensure that your `tctl` CLI is targeted and logged into the TSB management plane.
+As we ensured with our previous labs, prior to continuing ensure you have set an environment variable in the shell you are using named `PREFIX`.  You will also want to ensure that your `tctl` CLI is targeted and logged into the TSB management plane.
 
 We will be creating nearly identical configurations in all 4 of our application kubernetes clusters.  Using the `tctl apply` command create a Tetrate `IngressGateway` for each cluster.  Under the covers TSB will create all the needed service mesh configuration objects. Execute the following apply commands and then we'll inspect the configuration a bit further
 
