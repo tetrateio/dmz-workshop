@@ -1,7 +1,7 @@
 # Overview
 As we saw in the previous lab, after we deployed configuration that exposed our Frontend and Backend applications via the service mesh still had 2 issues:
 1. The Public Cloud services were not able to talk to the Private Cloud services and visa versa.
-2. The *Secure* applications we not actually secure.  The *Insecure* application could communicate freely with *Secure* services.
+2. The *Secure* applications were not actually secure.  The *Insecure* application could communicate freely with *Secure* services.
 
 We will configure global mesh policy to correct these issues
 
