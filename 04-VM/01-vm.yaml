@@ -1,0 +1,109 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: frontend-vm
+  namespace: $PREFIX-demo-secure
+spec:
+  secretName: frontend-vm-certs
+  issuerRef:
+    name: letsencrypt-gke-tsb
+    kind: ClusterIssuer
+  dnsNames:
+    - $PREFIX-vm-secure.east.private.cloud.zwickey.net
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: frontend-vm
+  namespace: $PREFIX-demo-secure
+spec:
+  workloadSelector:
+    labels:
+      cloud: private
+      class: vm # to avoid interfering with configuration of sidecars on k8s 
+      app: frontend-vm
+  ingress:
+    - port:
+        number: 8080
+        protocol: HTTP
+        name: http
+      defaultEndpoint: 127.0.0.1:8080
+  egress:
+    - bind: 127.0.0.2
+      hosts:
+        - "./*"
+        - xcp-multicluster/*
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: WorkloadEntry
+metadata:
+  name: backend-vm
+  namespace: $PREFIX-demo-secure
+  annotations:
+    sidecar-bootstrap.istio.io/ssh-host: 3.133.141.158
+    sidecar-bootstrap.istio.io/ssh-user: ec2-user
+    sidecar-bootstrap.istio.io/proxy-config-dir: /etc/istio-proxy
+    sidecar-bootstrap.istio.io/proxy-image-hub: docker.io/tetrate
+    sidecar-bootstrap.istio.io/proxy-instance-ip: 10.0.31.132
+spec:
+  address: 10.0.31.132
+  labels:
+    cloud: private
+    class: vm
+    app: backend-vm
+  serviceAccount: vm-sa
+  network: aws-vms
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: backend-vm
+  namespace: $PREFIX-demo-secure
+spec:
+  workloadSelector:
+    labels:
+      cloud: private
+      class: vm # to avoid interfering with configuration of sidecars on k8s 
+      app: backend-vm
+  ingress:
+    - port:
+        number: 8888
+        protocol: HTTP
+        name: http
+      defaultEndpoint: 127.0.0.1:8888
+  egress:
+    - bind: 127.0.0.2
+      hosts:
+        - "./*"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-vm
+  namespace: $PREFIX-demo-secure
+  labels:
+    app: frontend-vm
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: frontend-vm
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-vm
+  namespace: $PREFIX-demo-secure
+  labels:
+    app: backend-vm
+spec:
+  ports:
+  - port: 8080
+    name: http-main
+  - port: 80
+    targetPort: 8888
+    name: http-cats
+  selector:
+    app: backend-vm

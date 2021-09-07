@@ -1,0 +1,70 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: frontend-vm
+  namespace: $PREFIX-demo-secure
+spec:
+  secretName: frontend-vm-certs
+  issuerRef:
+    name: letsencrypt-gke-tsb
+    kind: ClusterIssuer
+  dnsNames:
+    - $PREFIX-vm-secure.east.private.cloud.zwickey.net
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-vm
+  namespace: $PREFIX-demo-secure
+  labels:
+    app: frontend-vm
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: frontend-vm
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: WorkloadEntry
+metadata:
+  name: frontend-vm
+  namespace: $PREFIX-demo-secure
+  annotations:
+    sidecar-bootstrap.istio.io/ssh-host: $EXTERNAL_IP
+    sidecar-bootstrap.istio.io/ssh-user: ec2-user
+    sidecar-bootstrap.istio.io/proxy-config-dir: /etc/istio-proxy
+    sidecar-bootstrap.istio.io/proxy-image-hub: docker.io/tetrate
+    sidecar-bootstrap.istio.io/proxy-instance-ip: $INTERNAL_IP
+spec:
+  address: $INTERNAL_IP
+  labels:
+    cloud: private
+    class: vm
+    app: frontend-vm
+  serviceAccount: vm-sa
+  network: aws-vms
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: frontend-vm
+  namespace: $PREFIX-demo-secure
+spec:
+  workloadSelector:
+    labels:
+      cloud: private
+      class: vm # to avoid interfering with configuration of sidecars on k8s 
+      app: frontend-vm
+  ingress:
+    - port:
+        number: 8080
+        protocol: HTTP
+        name: http
+      defaultEndpoint: 127.0.0.1:8080
+  egress:
+    - bind: 127.0.0.2
+      hosts:
+        - "./*"
+        - xcp-multicluster/*
