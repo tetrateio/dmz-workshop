@@ -69,7 +69,7 @@ We have deployed our services across 4 clusters -- 2 public cloud clusters and 2
 
 Open your browser and navigate to https://$PREFIX-insecure.public.cloud.zwickey.net.  Make sure you replate $PREFIX in the URL with your prefix value.  The application should display in your browser.  Enter the internal address for the backend running in the public cloud east cluster -- `$PREFIX.insecure.public.mesh`.  This will cause the frontend microservice to call to the details microservice over the service mesh and return the display the response via the frontend app.  
 
-Click that back button and this time enter the internal address for the backend running in the *public cloud west* Cluster -- `$PREFIX.secure.public.mesh `.  The frontend application will use global service discovery to find the application running in a completely different kubernetes cluster.  It will then utilize the mesh to route securely via mTLS to call the backend service in the cluster.  The reponse you see in the frontend application UI will confirm which cluster responsed to the frontend.
+Click that back button and this time enter the internal address for the backend running in the *public cloud west* Cluster -- `$PREFIX.secure.public.mesh`.  The frontend application will use global service discovery to find the application running in a completely different kubernetes cluster.  It will then utilize the mesh to route securely via mTLS to call the backend service in the cluster.  The reponse you see in the frontend application UI will confirm which cluster responsed to the frontend.
 
 ![Base Diagram](../images/02-app.png)
 

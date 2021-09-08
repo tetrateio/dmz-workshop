@@ -37,6 +37,8 @@ Open your browser and navigate to https://$PREFIX-secure.public.cloud.zwickey.ne
 
 ![Base Diagram](../images/03-error.png)
 
+Create the policy and configuration that will apply to the Secure Application workspace using `tctl apply`:
+
 ```bash
 envsubst < 03-Security/02-dmz-policy-config.yaml | tctl apply -f -   
 ``` 
