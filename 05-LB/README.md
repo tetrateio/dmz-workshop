@@ -71,7 +71,7 @@ Take note of the fact that the Tier1 Gateway is loadbalancing request across bot
 - Lets simulate a *failure* of the details service.  We'll do this by scaling the replicas of the deployment to zero.  Change your kubecontext to the `private east` cluster and use kubectl to scale the details deployment to zero.
 
 ```bash
-kubectl scale deployment details-v1 --replicas 0 -n test-bookinfo
+kubectl scale deployment details-v1 --replicas 0 -n $PREFIX-bookinfo
 ```
 
 Wait a few seconds for the pods to completely terminate.  Go back to the browser windows that is open to the bookinfo application (`bookinfo.$PREFIX.cloud.zwickey.net`).   Refresh the page another 10-15 times.  You'll not you don't get any errors.  This is because immediately the mesh identifies the error and shifts requests to the details service to the healthy instances in the private west cluster.
