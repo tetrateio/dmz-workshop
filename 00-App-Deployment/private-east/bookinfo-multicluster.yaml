@@ -271,3 +271,16 @@ spec:
   kubeSpec:
     service:
       type: LoadBalancer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: bookinfo
+  namespace: $PREFIX-bookinfo
+spec:
+  secretName: bookinfo-certs
+  issuerRef:
+    name: letsencrypt-gke-tsb
+    kind: ClusterIssuer
+  dnsNames:
+    - bookinfo.$PREFIX.cloud.zwickey.net

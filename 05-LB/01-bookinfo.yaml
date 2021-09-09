@@ -1,0 +1,36 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: bookinfo-gw
+  group: bookinfo-gateways
+  workspace: $PREFIX-secure-bookinfo
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+spec:
+  workloadSelector:
+    namespace: $PREFIX-bookinfo
+    labels:
+      app: $PREFIX-tsb-gateway-bookinfo
+  http:
+    - name: bookinfo-gw
+      port: 443
+      hostname: bookinfo.$PREFIX.cloud.zwickey.net
+      tls:
+        mode: SIMPLE
+        secretName: bookinfo-certs
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-bookinfo/productpage.$PREFIX-bookinfo.svc.cluster.local"
+              port: 9080
+    - name: details-gw
+      port: 9080
+      hostname: "details.secure.$PREFIX.private.mesh"
+      tls:
+        mode: DISABLED
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-bookinfo/details.$PREFIX-bookinfo.svc.cluster.local"
+              port: 9080

@@ -16,3 +16,16 @@ spec:
       # This will be used to demo Tier1 w/ Bookinfo
       annotations:
         "external-dns.alpha.kubernetes.io/hostname": "bookinfo.$PREFIX.cloud.zwickey.net."
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: bookinfo
+  namespace: $PREFIX-dmz
+spec:
+  secretName: bookinfo-certs
+  issuerRef:
+    name: letsencrypt-gke-tsb
+    kind: ClusterIssuer
+  dnsNames:
+    - bookinfo.$PREFIX.cloud.zwickey.net

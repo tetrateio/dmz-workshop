@@ -1,0 +1,21 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Tier1Gateway
+metadata:
+  name: gateway-bookinfo
+  group: gateway
+  workspace: $PREFIX-dmz
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+spec:
+  workloadSelector:
+    namespace: $PREFIX-dmz
+    labels:
+      app: $PREFIX-dmz-gateway
+  externalServers:
+  - hostname: bookinfo.$PREFIX.cloud.zwickey.net
+    name: bookinfo
+    port: 443
+    tls:
+      mode: SIMPLE
+      secretName: bookinfo-certs
