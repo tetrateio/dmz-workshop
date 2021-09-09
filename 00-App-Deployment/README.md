@@ -57,14 +57,16 @@ kubectl get istiooperator -n istio-gateway tsb-gateways -o yaml
 ```
 
 By now our application should be running and pods/services introduced into the global service mesh.  We even have an Istio `IngressGateway` bound to an external load balancer and DNS entry (via `external-dns`).  However, we have not deployed any mesh configuration yet so our application will not be accessible external from the mesh.  For now we can verify our application is running and functioning properly in the mesh by port-forwarding.  
+
+First, lets find the external IP address assigned by AWS to your jumpbox by curling the metadata endpoint exposed locally.  You will use this address when you open a browser window.
+
 ```bash
-kubectl port-forward -n $PREFIX-demo-insecure $(kubectl get po -n $PREFIX-demo-insecure --output=jsonpath={.items..metadata.name} -l app=frontend) --address 0.0.0.0 8888:8888
+curl http://169.254.169.254/latest/meta-data/public-ipv4
 ```
 
-Find the external IP address assigned by AWS to your jumpbox by curling the metadata endpoint exposed locally.  You will use this address when you open a browser window.
-
+Then setup the port-forwarding
 ```bash
-curl http://169.254.169.254/latest/meta-data/public-ipv4"
+kubectl port-forward -n $PREFIX-demo-insecure $(kubectl get po -n $PREFIX-demo-insecure --output=jsonpath={.items..metadata.name} -l app=frontend) --address 0.0.0.0 8888:8888
 ```
 
 Open your browser and navigate to `<JUMPHOST EXTERNAL IP>:8888`.  Enter `backend` in the Backend HTTP URL text box and submit the request.  This will cause the frontend microservice to call to the backend microservice over the service mesh and return the display the response via the frontend app.
