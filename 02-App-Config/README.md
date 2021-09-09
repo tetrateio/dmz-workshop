@@ -44,7 +44,9 @@ You can easily verify that this maps to the correct envoy gateway pod using a si
 
 ```bash
 kubectl get po -n $PREFIX-demo-secure -l istio=ingressgateway --show-labels
+```
 
+```bash
 NAME                               READY   STATUS    RESTARTS   AGE   LABELS
 abz-tsb-gateway-6dd848764b-xwplw   1/1     Running   0          21h   app=abz-tsb-gateway,install.operator.istio.io/owning-resource=unknown,istio.io/rev=default,istio=ingressgateway,operator.istio.io/component=IngressGateways,pod-template-hash=6dd848764b,service.istio.io/canonical-name=abz-tsb-gateway,service.istio.io/canonical-revision=latest
 ```
@@ -77,7 +79,9 @@ How did this work?  Change your kubecontext to the public cloud east cluster, wh
 
 ```bash
 kubectl describe serviceentries.networking.istio.io -n xcp-multicluster gateway-secure-$PREFIX-public-mesh  
+```
 
+```bash
 ...
 Spec:
   Endpoints:
