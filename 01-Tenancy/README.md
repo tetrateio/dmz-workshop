@@ -81,7 +81,7 @@ spec:
 ```
 
 ## Create Workspace Groups
-Lastly we'll create `Groups`, which is the contstruct within the TSB multi-tenancy model that contains service mesh configuration for an application.  For now we'll only create a set of `Traffic Groups`, which is the bear minumim needed to expose our services via the ingress gateway we have already deployed.  The configuration is deployed to TSB using the `tctl apply` command:
+Lastly we'll create `Groups`, which is the contstruct within the TSB multi-tenancy model that contains service mesh configuration for an application.  For now we'll only create a set of `Gateway Groups`, which is the bear minumim needed to expose our services via the ingress gateway we have already deployed.  The configuration is deployed to TSB using the `tctl apply` command:
 
 ```bash
 envsubst < 01-Tenancy/03-group.yaml | tctl apply -f -
