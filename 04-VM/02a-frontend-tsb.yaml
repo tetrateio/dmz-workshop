@@ -45,7 +45,7 @@ spec:
       tls:
         mode: SIMPLE
         secretName: frontend-vm-certs
-      hostname: $PREFIX-vm-secure.east.private.cloud.zwickey.net
+      hostname: vm.secure.private.$PREFIX.cloud.zwickey.net
       routing:
         rules:
           - route:

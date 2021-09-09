@@ -9,4 +9,4 @@ spec:
     service:
       type: LoadBalancer
       annotations:
-        "external-dns.alpha.kubernetes.io/hostname": "$PREFIX-insecure.public.cloud.zwickey.net."
+        "external-dns.alpha.kubernetes.io/hostname": "insecure.public.$PREFIX.cloud.zwickey.net."

@@ -18,7 +18,7 @@ spec:
       tls:
         mode: SIMPLE
         secretName: frontend-certs
-      hostname: $PREFIX-secure.public.cloud.zwickey.net
+      hostname: secure.public.$PREFIX.cloud.zwickey.net
       routing:
         rules:
           - route:
@@ -26,7 +26,7 @@ spec:
               port: 8888
     - name: secure-backend-internal
       port: 80
-      hostname: $PREFIX.secure.public.mesh
+      hostname: secure.$PREFIX.public.mesh
       routing:
         rules:
           - route:

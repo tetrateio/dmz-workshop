@@ -1,5 +1,5 @@
 # Overview
-Our applications are deployed but we need to create tenancy for our applications within Tetrate Service Bridge.  The Tenant, Workspace(s), and Group(s) that are created will allow us to bind policy and configuration to our applications, controlling appication traffic and routing, security, and observability.  The concepts within multi-tenancy are also where we bind the logical concepts of an Application and associated mesh configuration to physical compute infrastructure.
+Our applications are deployed but we need to create tenancy for our applications within Tetrate Service Bridge.  The Tenant, Workspace(s), and Group(s) that are created will allow us to bind policy and configuration to our applications, controlling application traffic and routing, security, and observability.  The concepts within multi-tenancy are also where we bind the logical concepts of an Application and associated mesh configuration to physical compute infrastructure.
 
 ![Base Diagram](../images/02-tenant.png)
 

@@ -47,5 +47,8 @@ This is the canonical [Istio demo application, Bookinfo.](https://istio.io/lates
 
 
 ## Prerequisites & Environment Setup
-xxx
-Notes on deployment... emv var for envsubst
+- connect to jump box
+- CD to dmz host
+- logging into k8s envs
+- TCTL login
+- Setting env PREFIX

@@ -260,7 +260,7 @@ spec:
         - containerPort: 9080
         env:
         - name: DETAILS_HOSTNAME
-          value: $PREFIX-details.tetrate.mesh
+          value: details.secure.$PREFIX.private.mesh
 ---
 apiVersion: install.tetrate.io/v1alpha1
 kind: IngressGateway

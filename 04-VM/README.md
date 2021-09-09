@@ -21,8 +21,8 @@ The registration of the VM workload with the service mesh is driven by the confi
 
 ## Onboarding a VM
 We will onboard our backend and frontend applications into our Mesh to demonstrate the following scenarios:
-- Traffic originating from the Global Service mesh routing the application on the VM
-- Application on the VM routing making requests to containerized apps via the Global Service Mesh.
+- Traffic originating from the Global Service mesh routing the backend application on the VM
+- Frontend application on the VM making requests to containerized apps via the Global Service Mesh.
 
 For simplicity's sake, we'll utilize our jumpbox to run our VM applications; in other words our jumpbox will be onboarded into the Global Service Mesh.
 
@@ -129,7 +129,7 @@ This configuration file is nearly identical to the application configuration we 
 ```yaml
 - name: secure-backend-vm-internal
   port: 80
-  hostname: $PREFIX-vm.secure.private.mesh
+  hostname: vm.secure.$PREFIX.private.mesh
   routing:
   rules:
   - route:
@@ -137,7 +137,7 @@ This configuration file is nearly identical to the application configuration we 
     port: 80
 ```
 
-8. Now we can test our VM service via the mesh.  We will test via the frontend application that is running in our Private West cluster.  Open a browser and navigate to $PREFIX-secure.west.private.cloud.zwickey.net (replace $PREFIX with your actual prefix).  In the Backend HTTP URL field enter the URL route we just configured, which should be in the form of $PREFIX-vm.secure.private.mesh.  We should see a response from our VM backend, which is serving a cute puppy pic!
+8. Now we can test our VM service via the mesh.  We will test via the frontend application that is running in our Private West cluster.  Open a browser and navigate to secure.west.private.$PREFIX.cloud.zwickey.net (replace $PREFIX with your actual prefix).  In the Backend HTTP URL field enter the URL route we just configured, which should be in the form of vm.secure.$PREFIX.private.mesh.  We should see a response from our VM backend, which is serving a cute puppy pic!
 
 ![Base Diagram](../images/04-backend.png)
 
@@ -215,7 +215,7 @@ This configuration file is nearly identical to the application configuration we 
   tls:
     mode: SIMPLE
     secretName: frontend-vm-certs
-  hostname: $PREFIX-vm-secure.east.private.cloud.zwickey.net
+  hostname: vm.secure.private.$PREFIX.cloud.zwickey.net
     routing:
       rules:
       - route:
@@ -223,7 +223,7 @@ This configuration file is nearly identical to the application configuration we 
           port: 8080
 ```
 
-5. Now we can test our frontend VM service and access other containerized services via the Global Mesh.  Open a browser and navigate to $PREFIX-vm-secure.east.private.cloud.zwickey.net (replace $PREFIX with your actual prefix).  We'll test routing from this VM across to our Private West cluster and access the backend.  In the Backend HTTP URL field enter the URL for the private west backend: $PREFIX-west.secure.private.mesh
+5. Now we can test our frontend VM service and access other containerized services via the Global Mesh.  Open a browser and navigate to vm.secure.private.$PREFIX.cloud.zwickey.net (replace $PREFIX with your actual prefix).  We'll test routing from this VM across to our Private West cluster and access the backend.  In the Backend HTTP URL field enter the URL for the private west backend: west.secure.$PREFIX.private.mesh
 
 You should receive a response from the backend with the cat picture!
 

@@ -13,17 +13,17 @@ spec:
     labels:
       app: $PREFIX-dmz-gateway
   internalServers:
-  - hostname: $PREFIX-east.secure.private.mesh
+  - hostname: east.secure.$PREFIX.private.mesh
     name: east-private
-  - hostname: $PREFIX-west.secure.private.mesh
+  - hostname: west.secure.$PREFIX.private.mesh
     name: west-private
   externalServers:
-  - hostname: $PREFIX-east.secure.private.mesh
+  - hostname: east.secure.$PREFIX.private.mesh
     name: east-private
     port: 80
     tls:
       mode: DISABLED
-  - hostname: $PREFIX-west.secure.private.mesh
+  - hostname: west.secure.$PREFIX.private.mesh
     name: west-private
     port: 80
     tls:

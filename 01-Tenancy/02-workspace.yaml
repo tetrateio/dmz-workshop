@@ -104,3 +104,21 @@ spec:
       serviceAccounts:
       - '*/*'
   displayName: secure-default
+---
+apiVersion: api.tsb.tetrate.io/v2
+kind: WorkspaceSetting
+metadata:
+  displayName: secure-default
+  name: secure-default
+  organization: tetrate
+  tenant: $PREFIX-tetrate
+  workspace:  $PREFIX-dmz
+spec:
+  defaultSecuritySetting:
+    authenticationSettings:
+      trafficMode: REQUIRED
+    authorization:
+      mode: CUSTOM
+      serviceAccounts:
+      - '*/*'
+  displayName: secure-default

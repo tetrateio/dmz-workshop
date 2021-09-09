@@ -20,6 +20,12 @@ metadata:
     istio-injection: enabled
 
 ---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: istio-cni
+  namespace: $PREFIX-bookinfo
+---
 ##################################################################################################
 # Details service
 ##################################################################################################
@@ -255,7 +261,7 @@ spec:
         - containerPort: 9080
         env:
         - name: DETAILS_HOSTNAME
-          value: $PREFIX-details.tetrate.mesh
+          value: details.secure.$PREFIX.private.mesh
 ---
 apiVersion: install.tetrate.io/v1alpha1
 kind: IngressGateway

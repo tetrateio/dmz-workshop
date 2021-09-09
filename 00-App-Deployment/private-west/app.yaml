@@ -136,4 +136,4 @@ spec:
     name: letsencrypt-gke-tsb
     kind: ClusterIssuer
   dnsNames:
-    - $PREFIX-secure.west.private.cloud.zwickey.net
+    - secure.west.private.$PREFIX.cloud.zwickey.net

@@ -26,14 +26,14 @@ defaultSecuritySetting:
 
 This will configure *all* services deployed to any cluster that is part of the Secure workspace to require strict mTLS authentication.  Additionally, and more importantly, it will also configure mTLS authorization that only allows services within the Secure `Workspace` to connect.
 
-2.  Lets now verify that our changes had the desired affect.
+2.  Lets now verify that our changes had the desired affect.  Once again open your browser and navigate to https://insecure.public.$PREFIX.cloud.zwickey.net.  Make sure you replate $PREFIX in the URL with your prefix value.  Enter the internal address for the secure backend running in the public cloud west cluster -- `secure.$PREFIX.public.mesh`.  This will cause the frontend microservice to attempt to call the secure backend.  However, you should receive an `RBAC: Access Denied` message, which is an http 403 response.  We've successfully added policy to block insecure -> secure app communication.    
 
-TODO... need product fix/workaround
+![Base Diagram](../images/03-security.png)
 
 ## Enabling Cross-Cloud communication via DMZ
 As we demonstrated previously, the Frontend application running in a public cloud cluster is not able to talk to any application services running in a private cloud cluster.  We will create an Allow-List for this communication in the DMZ in this portion of the lab.  But first, lets verify one more time that the Frontend application running in the Public Cloud West cluster, which is part of the Secure workspace, is unable to discover and communicate with the backend running in the the Private Cloud West cluster.  
 
-Open your browser and navigate to https://$PREFIX-secure.public.cloud.zwickey.net.  Make sure you replate $PREFIX in the URL with your prefix value.  The application should display in your browser.  Enter the internal address for the backend running in the private west cluster -- `$PREFIX-west.secure.private.mesh`.  This should result in an error:
+Open your browser and navigate to https://secure.public.$PREFIX.cloud.zwickey.net.  Make sure you replate $PREFIX in the URL with your prefix value.  The application should display in your browser.  Enter the internal address for the backend running in the private west cluster -- `west.secure.$PREFIX.private.mesh`.  This should result in an error:
 
 ![Base Diagram](../images/03-error.png)
 
@@ -47,9 +47,9 @@ Inspect the file `03-Security/02-dmz-policy-config.yaml`.  As you may expect, th
 
 ```yaml
 internalServers:
-  - hostname: $PREFIX-east.secure.private.mesh
+  - hostname: east.secure.$PREFIX.private.mesh
     name: east-private
-  - hostname: $PREFIX-west.secure.private.mesh
+  - hostname: west.secure.$PREFIX.private.mesh
     name: west-private
 ``` 
 
@@ -61,7 +61,7 @@ If you really want to dig into the details of how this worked, we can look into 
 
 1.  First change your kubecontext to the Public Cloud West cluster.  Look at the `ServiceEntry` that was distirbued that facilitiated the Public Cloud -> DMZ communication using the `kubectl describe` command:
 ```bash
-kubectl describe se -n xcp-multicluster gateway-$PREFIX-west-secure-private-mesh
+kubectl describe se -n xcp-multicluster gateway-west-secure-$PREFIX-private-mesh
 ```
 ```yaml
 Spec:
@@ -79,7 +79,7 @@ Spec:
   Export To:
     *
   Hosts:
-    abz-west.secure.private.mesh
+    west.secure.abz.private.mesh
   Location:  MESH_INTERNAL
   Ports:
     Name:      http
@@ -88,11 +88,11 @@ Spec:
   Resolution:  STATIC
 ```
 
-You'll note that the mesh configuration delivered the to the Public Cloud West clusters identifies the route for `$PREFIX-west.secure.private.mesh` (`abz-west.secure.private.mesh` in my example) to connect via a `remoteGateway` located in a `network` that we've tagged as DMZ in our topology, and it will transit via a mesh internal port of `15443` via mTLS communication.
+You'll note that the mesh configuration delivered the to the Public Cloud West clusters identifies the route for `west.secure.$PREFIX.private.mesh` (`west.secure.abz.private.mesh` in my example) to connect via a `remoteGateway` located in a `network` that we've tagged as DMZ in our topology, and it will transit via a mesh internal port of `15443` via mTLS communication.
 
 - Now change your kubecontext to the DMZ cluster and look at the same `ServiceEntry` using the exact same `kubectl describe` command:
 ```bash
-kubectl describe se -n xcp-multicluster gateway-$PREFIX-west-secure-private-mesh
+kubectl describe se -n xcp-multicluster gateway-west-secure-$PREFIX-private-mesh
 ```
 ```yaml
 Spec:
@@ -110,7 +110,7 @@ Spec:
   Export To:
     *
   Hosts:
-    abz-west.secure.private.mesh
+    west.secure.abz.private.mesh
   Location:  MESH_INTERNAL
   Ports:
     Name:      http
@@ -119,7 +119,7 @@ Spec:
   Resolution:  DNS
 ```
 
-The mesh configuration delivered to the DMZ Cluster is very similar, except it knows how to forward traffic for the route `$PREFIX-west.secure.private.mesh` to the remote gateway on the private network; still using mTLS over port 15443.
+The mesh configuration delivered to the DMZ Cluster is very similar, except it knows how to forward traffic for the route `west.secure.$PREFIX.private.mesh` to the remote gateway on the private network; still using mTLS over port 15443.
 
 2.  To explain the last piece of the puzzle, lets take a look `NetworkReachability` that has already been defined in the environment that forces all Cross-Cloud traffic to transit throught he DMZ.  Execute the following `tctl` command:
 

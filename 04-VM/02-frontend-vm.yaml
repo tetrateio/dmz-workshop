@@ -10,7 +10,7 @@ spec:
     name: letsencrypt-gke-tsb
     kind: ClusterIssuer
   dnsNames:
-    - $PREFIX-vm-secure.east.private.cloud.zwickey.net
+    - vm.secure.private.$PREFIX.cloud.zwickey.net
 ---
 apiVersion: v1
 kind: Service

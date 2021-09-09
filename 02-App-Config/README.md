@@ -49,7 +49,7 @@ NAME                               READY   STATUS    RESTARTS   AGE   LABELS
 abz-tsb-gateway-6dd848764b-xwplw   1/1     Running   0          21h   app=abz-tsb-gateway,install.operator.istio.io/owning-resource=unknown,istio.io/rev=default,istio=ingressgateway,operator.istio.io/component=IngressGateways,pod-template-hash=6dd848764b,service.istio.io/canonical-name=abz-tsb-gateway,service.istio.io/canonical-revision=latest
 ```
 
-- Lastly, you'll see the definition of the ingress endpoints for both the frontend and backend applications.  Pay particular note to the FDNQs at which the services are exposed.  The frontend application is exposed at a FQDN that is publicly resolvable.  Additionally, it is exposed on 443 for TLS along with a valid certificate specified.  Conversely, the backend is exposed via a FQDN that is not public, `secure.public.mesh`.  This is because it is for *internal mesh traffic* and will only be resolvable by services within the global mesh.  Additionally, and external certificate for TLS communication is not necessary as the global mesh will automatically encrypt all inter-mesh traffic.  
+- Lastly, you'll see the definition of the ingress endpoints for both the frontend and backend applications.  Pay particular note to the FDNQs at which the services are exposed.  The frontend application is exposed at a FQDN that is publicly resolvable.  Additionally, it is exposed on 443 for TLS along with a valid certificate specified.  Conversely, the backend is exposed via a FQDN that is not public, `secure.$PREFIX.public.mesh`.  This is because it is for *internal mesh traffic* and will only be resolvable by services within the global mesh.  Additionally, and external certificate for TLS communication is not necessary as the global mesh will automatically encrypt all inter-mesh traffic.  
 
 Now lets test our applications!
 
@@ -58,25 +58,25 @@ We have deployed our services across 4 clusters -- 2 public cloud clusters and 2
 
 | Cluster      | Application | External Address | Internal Address |
 | ----------- | ----------- | ----------- | ----------- |
-| Public Cloud East (Insecure)   | frontend        | $PREFIX-insecure.public.cloud.zwickey.net        | N/A        |
-|  | backend        | N/A        | $PREFIX.insecure.public.mesh        |
-| Public Cloud West (Secure)   | frontend        | $PREFIX-secure.public.cloud.zwickey.net        | N/A        |
-|  | backend        | N/A        | $PREFIX.secure.public.mesh        |
-| Private Cloud East (Secure)   | frontend        | $PREFIX-secure.east.private.cloud.zwickey.net       | N/A        |
-|  | backend        | N/A        | $PREFIX-east.secure.private.mesh     |
-| Private Cloud West (Secure)   | frontend        | $PREFIX-secure.west.private.cloud.zwickey.net       | N/A        |
-|  | backend        | N/A        | $PREFIX-west.secure.private.mesh        |
+| Public Cloud East (Insecure)   | frontend        | insecure.public.$PREFIX.cloud.zwickey.net        | N/A        |
+|  | backend        | N/A        | insecure.$PREFIX.public.mesh        |
+| Public Cloud West (Secure)   | frontend        | secure.public.$PREFIX.cloud.zwickey.net        | N/A        |
+|  | backend        | N/A        | secure.$PREFIX.public.mesh        |
+| Private Cloud East (Secure)   | frontend        | secure.east.private.$PREFIX.cloud.zwickey.net       | N/A        |
+|  | backend        | N/A        | east.secure.$PREFIX.private.mesh     |
+| Private Cloud West (Secure)   | frontend        | secure.west.private.$PREFIX.cloud.zwickey.net       | N/A        |
+|  | backend        | N/A        | west.secure.$PREFIX.private.mesh        |
 
-Open your browser and navigate to https://$PREFIX-insecure.public.cloud.zwickey.net.  Make sure you replate $PREFIX in the URL with your prefix value.  The application should display in your browser.  Enter the internal address for the backend running in the public cloud east cluster -- `$PREFIX.insecure.public.mesh`.  This will cause the frontend microservice to call to the details microservice over the service mesh and return the display the response via the frontend app.  
+Open your browser and navigate to https://insecure.public.$PREFIX.cloud.zwickey.net.  Make sure you replate $PREFIX in the URL with your prefix value.  The application should display in your browser.  Enter the internal address for the backend running in the public cloud east cluster -- `insecure.$PREFIX.public.mesh`.  This will cause the frontend microservice to call to the details microservice over the service mesh and return the display the response via the frontend app.  
 
-Click that back button and this time enter the internal address for the backend running in the *public cloud west* Cluster -- `$PREFIX.secure.public.mesh`.  The frontend application will use global service discovery to find the application running in a completely different kubernetes cluster.  It will then utilize the mesh to route securely via mTLS to call the backend service in the cluster.  The reponse you see in the frontend application UI will confirm which cluster responsed to the frontend.
+Click that back button and this time enter the internal address for the backend running in the *public cloud west* Cluster -- `secure.$PREFIX.public.mesh`.  The frontend application will use global service discovery to find the application running in a completely different kubernetes cluster.  It will then utilize the mesh to route securely via mTLS to call the backend service in the cluster.  The reponse you see in the frontend application UI will confirm which cluster responsed to the frontend.
 
 ![Base Diagram](../images/02-app.png)
 
 How did this work?  Change your kubecontext to the public cloud east cluster, which is where the frontend application you tested with is running.  You can view the global config that was automatically distributed across the mesh by executing the following command to show `ServiceEntries` that were created.  This configuration instructs the frontend's service mesh sidecar how to connect to the backend running on a different cluster.
 
 ```bash
-kubectl describe serviceentries.networking.istio.io -n xcp-multicluster gateway-$PREFIX-secure-public-mesh  
+kubectl describe serviceentries.networking.istio.io -n xcp-multicluster gateway-secure-$PREFIX-public-mesh  
 
 ...
 Spec:

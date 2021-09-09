@@ -7,7 +7,7 @@ metadata:
 apiVersion: install.tetrate.io/v1alpha1
 kind: IngressGateway
 metadata:
-  name: dmz-gateway
+  name: $PREFIX-dmz-gateway
   namespace: $PREFIX-dmz
 spec:
   kubeSpec:
@@ -15,4 +15,4 @@ spec:
       type: LoadBalancer
       # This will be used to demo Tier1 w/ Bookinfo
       annotations:
-        "external-dns.alpha.kubernetes.io/hostname": "$PREFIX-bookinfo.cloud.zwickey.net."
+        "external-dns.alpha.kubernetes.io/hostname": "bookinfo.$PREFIX.cloud.zwickey.net."
