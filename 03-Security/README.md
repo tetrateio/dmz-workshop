@@ -43,7 +43,7 @@ Create the policy and configuration that will apply to the Secure Application wo
 envsubst < 03-Security/02-dmz-policy-config.yaml | tctl apply -f -   
 ``` 
 
-Inspect the file `03-Security/02-dmz-policy-config.yaml`.  As you may expect, the metadata section contains the names and IDs that map the `WorkspaceSetting` to a specific `Tenant`, `Workspace`, and `TrafficGroup`. The key is the definition of a set of `internalServers` that represent the endpoints that will be allowed to traverse through the DMZ gateway. 
+Inspect the file `03-Security/02-dmz-policy-config.yaml`.  As you may expect, the metadata section contains the names and IDs that map the `WorkspaceSetting` to a specific `Tenant`, `Workspace`, and `GatewayGroup`. The key is the definition of a set of `internalServers` that represent the endpoints that will be allowed to traverse through the DMZ gateway. 
 
 ```yaml
 internalServers:
