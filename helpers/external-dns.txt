@@ -1,0 +1,19 @@
+kubectl create namespace external-dns-gcp
+
+gcloud iam service-accounts create external-dns \
+    --display-name "Service account for ExternalDNS on GCP"
+
+gcloud projects add-iam-policy-binding abz-env \
+    --role='roles/dns.admin' \
+    --member='serviceAccount:external-dns@abz-env.iam.gserviceaccount.com'
+
+gcloud iam service-accounts keys create credentials.json \
+    --iam-account external-dns@abz-env.iam.gserviceaccount.com
+
+kubectl -n external-dns-gcp create secret \
+    generic external-dns \
+  --from-file=credentials.json=scratch/credentials.json
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+helm install external-dns bitnami/external-dns --namespace external-dns-gcp --values helper/external-dns-values.yaml 

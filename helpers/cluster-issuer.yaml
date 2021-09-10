@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-gke-tsb
+  namespace: tsb
+spec:
+  acme:
+    email: adam@tetrate.io
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: cert-manager-issuer-gke-tsb-account-key
+    solvers:
+      - selector:
+          dnsZones:
+            - zwickey.net
+        dns01:
+          cloudDNS:
+            project: abz-env
+            serviceAccountSecretRef:
+              name: clouddns-dns01-solver-svc-acct
+              key: key.json

@@ -1,0 +1,43 @@
+## Hardcode the resource names to something human friendly
+nameOverride: external-dns-gcp
+
+## Watch these resources for new DNS records
+sources:
+  - service
+  # - ingress
+
+## use google as the dns provider
+provider: google
+
+# Specify the Google project (required when provider=google)
+# You'll need to create this secret containing your credentials.json
+google:
+  project: "abz-env"
+  serviceAccountSecret: "external-dns"
+
+## List of domains that can be managed. Should be managed by Google Cloud DNS
+domainFilters: ["zwickey.net"]
+
+# These help tell which records are owned by external-dns.
+registry: "txt"
+txtOwnerId: "k8s"
+txtPrefix: tetrate
+
+## Limit external-dns resources
+resources:
+  limits:
+    memory: 90Mi
+  requests:
+    memory: 90Mi
+    cpu: 100m
+
+## ensure RBAC is enabled
+rbac:
+  create: true
+  apiVersion: v1
+
+# This is needed for OpenShift
+podSecurityContext:
+  # runAsNonRoot: true
+  # fsGroup: 1000620001
+  # runAsUser: 1000620001

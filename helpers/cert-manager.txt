@@ -1,0 +1,5 @@
+kubectl create ns cert-manager
+kubectl create secret generic clouddns-dns01-solver-svc-acct -n cert-manager \
+   --from-file=/Users/zwickey/cloud/gcp/key.json 
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.4.0/cert-manager.yaml
+kubectl apply -f helper/cluster-issuer.yaml

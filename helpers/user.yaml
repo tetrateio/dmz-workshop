@@ -1,0 +1,32 @@
+---
+apiVersion: api.tsb.tetrate.io/v2
+kind: User
+metadata:
+ name: $USER_GUID
+ organization: tetrate
+spec:
+ displayName: $USER
+ email: $USER@tetrate.io
+ loginName: $USER_GUID
+ sourceType: MANUAL
+---
+apiVersion: api.tsb.tetrate.io/v2
+kind: Team
+metadata:
+  name: $USER
+  organization: tetrate
+spec:
+  displayName: $USER
+  description: $USER
+  members:
+    - organizations/tetrate/users/$USER_GUID
+---
+apiVersion: rbac.tsb.tetrate.io/v2
+kind: OrganizationAccessBindings
+metadata:
+  organization: tetrate
+spec:
+  allow:
+  - role: rbac/clusterreader
+    subjects:
+    - user: organizations/tetrate/users/$USER_GUID
