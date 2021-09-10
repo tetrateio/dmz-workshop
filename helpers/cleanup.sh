@@ -2,8 +2,8 @@
 : ${PREFIX?"Need to set PREFIX environment variable"}
 echo Env Prefix: $PREFIX
 
-export PRIVATE_EAST=abz-demo-secure/api-oc-ms-demo-east-cx-tetrate-info:6443/kube:admin
-export PRIVATE_WEST=abz-demo-secure/api-oc-ms-demo-west-cx-tetrate-info:6443/kube:admin
+export PRIVATE_EAST=default/api-oc-ms-demo-east-cx-tetrate-info:6443/kube:admin
+export PRIVATE_WEST=default/api-oc-ms-demo-west-cx-tetrate-info:6443/kube:admin
 export CLOUD_EAST=gke_abz-env_us-east4_public-east-4
 export CLOUD_WEST=gke_abz-env_us-west1_public-west-4
 export DMZ=gke_abz-env_us-east4_dmz
