@@ -5,6 +5,9 @@ metadata:
   name: examplefilter
   namespace: $PREFIX-demo-insecure
 spec:
+  workloadSelector:
+    labels:
+      app: frontend
   configPatches:
   - applyTo: HTTP_FILTER
     match:
