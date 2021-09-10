@@ -26,7 +26,7 @@ spec:
               port: 8888
     - name: secure-backend-internal
       port: 80
-      hostname: $PREFIX-east.secure.private.mesh
+      hostname: east.secure.$PREFIX.private.mesh
       routing:
         rules:
           - route:
@@ -34,7 +34,7 @@ spec:
               port: 80
     - name: secure-backend-vm-internal
       port: 80
-      hostname: $PREFIX-vm.secure.private.mesh
+      hostname: vm.secure.$PREFIX.private.mesh
       routing:
         rules:
           - route:
