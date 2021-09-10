@@ -152,7 +152,8 @@ Additionally, you can also see logs in the envoy proxy sidecar container that is
 
 ```bash
 docker logs istio-proxy
-
+```
+```bash
 .....
 [2021-09-08T19:47:34.206Z] "GET / HTTP/1.1" 200 - "-" 0 1750 1 0 "10.128.0.1" "Go-http-client/1.1" "2f6617c3-4b24-9971-ba8d-da4bdffa2b0a" "abz-vm.secure.private.mesh" "127.0.0.1:8888" inbound|8888|| 127.0.0.1:56210 10.0.93.162:8888 10.128.0.1:0 outbound_.80_._.backend-vm.abz-demo-secure.svc.cluster.local default
 ```
