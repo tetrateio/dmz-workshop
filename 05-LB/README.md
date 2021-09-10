@@ -62,7 +62,7 @@ Additionally, you'll note an endpoint entry for `details.secure.$PREFIX.private.
 
 ![Base Diagram](../images/05-bookinfo.png)
 
-- Log into the TSB UI by opening another browser tab and navigating to `https://tsb.demo.zwickey.net/admin/login`.  Select `Log in with OIDC` and when prompted enter your TSB credentials.  Once logged you will be routed to the Dashboard view.  Click the Topology tab in the top center portion of the UI.  This will display the topology of all microservices and the communciation flows between the service, even across clusters.
+- Log into the TSB UI by opening another browser tab and navigating to `https://tsb.demo.zwickey.net/admin/login`.  Select `Log in with OIDC` and when prompted enter your TSB credentials.  These can be found in the shared google sheet that you obtained jumpbox information from.  Once logged you will be routed to the Dashboard view.  Click the Topology tab in the top center portion of the UI.  This will display the topology of all microservices and the communciation flows between the service, even across clusters.
 
 ![Base Diagram](../images/05-bookinfo-topo.png)
 

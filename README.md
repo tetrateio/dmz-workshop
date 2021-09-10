@@ -22,6 +22,37 @@ IMPORTANT: Each new exercise builds upon the preceding lab, so please do not ski
 - Envoy Filters: [Slides](https://docs.google.com/presentation/d/11VD8G8uFDSjRqtPNJmxZUND7hlc3kiY6bGNhNRBxbJ8/edit#slide=id.ge82d745ba0_0_731) [Lab](06-Envoy/README.md)
 - Application Debugging: [Slides](https://docs.google.com/presentation/d/11VD8G8uFDSjRqtPNJmxZUND7hlc3kiY6bGNhNRBxbJ8/edit#slide=id.ge82d745ba0_0_743) [Lab](07-Debugging/README.md)
 
+## Environment Access Information
+The majority of the workshop will be executed via a jumpbox that has all the prerequisite CLIs installed.  Using the shared google doc provided by, *checkout* a jumpbox by adding your name to the sheet in the `Reserved Workshop User` column.  This shared document has TSB user/pwd and IP address for your jumpbox.
+
+- Access jumpbox using the private key provided by tetrate:
+```bash
+ssh -i abz.pem ec2-user@<JUMPBOX IP ADDRESS>
+```
+- Throughout the workshop you will be required to have an environment variable set in your jumpbox session named `PREFIX`.  This will be used to ensure your various kubernetes objects and TSB objects had unique names.  The PREFIX assigned to you is found in the shared google docs in the `Prefix` column of the jumpbox you checked out.  export this env var:
+```bash
+export PREFIX=<YOUR JUIMPBOX PREFIX>
+```
+
+
+- All labs will assume you have changed directories to the workshop git directory, which has already been checked out onto the jumpbox.  This is found in the `dmz-workshop` directory.
+```bash
+cd ~/dmz-workshop
+```
+
+- The jumpbox should already be logged into each kubernetes cluster.  If you recieve a message that you are not logged in you can execute the 2 helper scripts on the jumpbox that will log you in.
+```bash
+~/login-cloud.sh
+~/login-openshift.sh
+
+```
+
+- During your workshop you will be utilizing the TCTL CLI.  If you recieve a message that you are not logged in you can execute the helper script on the jumpbox that will log you in.
+```bash
+~/login-tctl.sh
+
+```
+
 ## Applications
 
 During this workshop we will be modeling 3 different applications that allow for various architecture and security patterns that span Multi-Cluster and Multi-Cloud.
@@ -44,11 +75,3 @@ This is the canonical [Istio demo application, Bookinfo.](https://istio.io/lates
 ![Base Diagram](images/bookinfo-app.png)
 
 ![Base Diagram](images/bookinfo-app-arch.png)
-
-
-## Prerequisites & Environment Setup
-- connect to jump box
-- CD to dmz host
-- logging into k8s envs
-- TCTL login
-- Setting env PREFIX
