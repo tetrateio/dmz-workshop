@@ -1,0 +1,6 @@
+spec:
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/userVolume: '[{"name":"wasmfilters-dir","configMap": {"name":"http-filter-example"}}]'
+        sidecar.istio.io/userVolumeMount: '[{"mountPath":"/var/local/lib/wasm-filters","name":"wasmfilters-dir"}]'
