@@ -55,7 +55,7 @@ Next we will create a few different `Workspaces` that will model the various app
 2. Secure App
 3. Bookinfo App
 
-Additionally, we will create a workspace that will contain the DMZ policy for cross-cloud traffic.  Apply the configuration using the `tctl`:
+Apply the configuration using the `tctl`:
 
 ```bash
 envsubst < 01-Tenancy/02-workspace.yaml | tctl apply -f -  
