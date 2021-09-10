@@ -29,15 +29,16 @@ The majority of the workshop will be executed via a jumpbox that has all the pre
 ```bash
 ssh -i abz.pem ec2-user@<JUMPBOX IP ADDRESS>
 ```
-- Throughout the workshop you will be required to have an environment variable set in your jumpbox session named `PREFIX`.  This will be used to ensure your various kubernetes objects and TSB objects had unique names.  The PREFIX assigned to you is found in the shared google docs in the `Prefix` column of the jumpbox you checked out.  export this env var:
+- Throughout the workshop you will be required to have an environment variable set in your jumpbox session named `PREFIX`.  This will be used to ensure your various kubernetes objects and TSB objects have unique names.  The PREFIX assigned to you is found in the shared google docs in the `Prefix` column of the jumpbox you checked out.  export this env var:
 ```bash
 export PREFIX=<YOUR JUIMPBOX PREFIX>
 ```
 
 
-- All labs will assume you have changed directories to the workshop git directory, which has already been checked out onto the jumpbox.  This is found in the `dmz-workshop` directory.
+- All labs will assume you have changed directories to the workshop git directory, which has already been checked out onto the jumpbox.  This is found in the `dmz-workshop` directory.  Also, it wouldn't hurt to doublecheck that you have the latest code checked out, just in case there are last minute changes that were committed after the jumpbox was created.
 ```bash
 cd ~/dmz-workshop
+git pull
 ```
 
 - The jumpbox should already be logged into each kubernetes cluster.  If you recieve a message that you are not logged in you can execute the 2 helper scripts on the jumpbox that will log you in.
