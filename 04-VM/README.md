@@ -106,7 +106,8 @@ We can verify the bootstapping process by making sure that the envoy docker cont
 
 ```bash
 docker ps
-
+```
+```bash
 CONTAINER ID   IMAGE                                            COMMAND                  CREATED         STATUS         PORTS     NAMES
 b1cb3cf79fe8   tetrate/proxyv2:1.8.6-p1-a924eb8aa1-distroless   "/usr/local/bin/pilo…"   5 seconds ago   Up 5 seconds             istio-proxy 
 ```
