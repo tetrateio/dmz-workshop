@@ -66,7 +66,7 @@ Additionally, you'll note an endpoint entry for `details.secure.$PREFIX.private.
 
 ![Base Diagram](../images/05-bookinfo-cluster.png)
 
-Click the Topology tab in the top center portion of the UI.  This will display the topology of all microservices and the communciation flows between the service, even across clusters.
+Then click the Topology tab in the top center portion of the UI.  This will display the topology of all microservices and the communciation flows between the service, even across clusters.
 
 ![Base Diagram](../images/05-bookinfo-topo.png)
 
@@ -78,7 +78,7 @@ Take note of the fact that the Tier1 Gateway is loadbalancing request across bot
 kubectl scale deployment details-v1 --replicas 0 -n $PREFIX-bookinfo
 ```
 
-Wait a few seconds for the pods to completely terminate.  Go back to the browser windows that is open to the bookinfo application (`bookinfo.$PREFIX.cloud.zwickey.net`).   Refresh the page another 10-15 times.  You'll not you don't get any errors.  This is because immediately the mesh identifies the error and shifts requests to the details service to the healthy instances in the private west cluster.
+Wait a few seconds for the pods to completely terminate.  Go back to the browser windows that is open to the bookinfo application (`bookinfo.$PREFIX.cloud.zwickey.net`).   Refresh the page another 10-15 times.  You'll note you don't get any errors.  This is because immediately the mesh identifies the service that is unavailable and shifts requests to the details service to the healthy instances in the private west cluster.
 
 - Lets see how this has changed our topology view.  Refresh the browser that has the TSB appliation open.  You'll now see a line representing traffic flowing from the productpage within the private east cluster to the gateway, and subsequently the details service, in the private west cluster.  
 
