@@ -53,6 +53,8 @@ cd ~/dmz-workshop
 
 ```
 
+- You will also need to frequently change kubernetes clusters via your kubecontext.  The jumpbox has `kubectx` installed to facilitate this.  You can list contexts by issuing the command `kubectx` and you can change you context with the command `kubectx <CONTEXT NAME>`.
+
 ## Applications
 
 During this workshop we will be modeling 3 different applications that allow for various architecture and security patterns that span Multi-Cluster and Multi-Cloud.
