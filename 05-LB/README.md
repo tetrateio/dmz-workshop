@@ -62,7 +62,7 @@ Additionally, you'll note an endpoint entry for `details.secure.$PREFIX.private.
 
 ![Base Diagram](../images/05-bookinfo.png)
 
-- Log into the TSB UI by opening another browser tab and navigating to `https://tsb.demo.zwickey.net/admin/login`.  Select `Log in with OIDC` and when prompted enter your TSB credentials.  These can be found in the shared google sheet that you obtained jumpbox information from.  Once logged you will be routed to the Dashboard view.  You'll want to limit the services displayed to just the bookinfo services.  Click the `SELECT CLUSTERS-NAMESPACES` button and select clusters and namesspaces for `<PREFIX>-bookinfo` and `<PREFIX>-dmz`.  
+- Log into the TSB UI by opening another browser tab and navigating to `https://tsb.demo.zwickey.net/admin/login`.  Select `Log in with OIDC` and when prompted enter your TSB credentials.  These can be found in the shared google sheet that you obtained jumpbox information from.  Once logged you will be routed to the Dashboard view.  You'll want to limit the services displayed to just the bookinfo services.  Click the `SELECT CLUSTERS-NAMESPACES` button and select clusters and namespaces for `<PREFIX>-bookinfo` and `<PREFIX>-dmz`.  
 
 ![Base Diagram](../images/05-bookinfo-cluster.png)
 

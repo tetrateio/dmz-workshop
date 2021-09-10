@@ -16,5 +16,5 @@ metadata:
 spec:
   allow:
   - role: rbac/admin
-    subjects:
+    subjects: 
     - team: organizations/tetrate/teams/$PREFIX
