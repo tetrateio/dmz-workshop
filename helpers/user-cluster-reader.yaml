@@ -1,0 +1,52 @@
+---
+apiVersion: rbac.tsb.tetrate.io/v2
+kind: OrganizationAccessBindings
+metadata:
+  organization: tetrate
+spec:
+  allow:
+  - role: rbac/clusterreader
+    subjects:
+    - user: organizations/tetrate/users/deb87b4f-76d5-4676-8be3-184074ce4637
+    - user: organizations/tetrate/users/e277daee-5040-43c8-b5b5-9322228d9525
+    - user: organizations/tetrate/users/fe36957b-de74-4790-a115-de5f1bfce440
+    - user: organizations/tetrate/users/6f837cae-1d1f-4f5b-9287-b451c9fa0671
+    - user: organizations/tetrate/users/955ad4f8-f998-44f0-9c08-7218ad3dd861
+    - user: organizations/tetrate/users/7fcadf39-ee02-4af9-8109-2c97aed59fff
+    - user: organizations/tetrate/users/963b4079-e625-4195-ad51-5c7e320d8cde
+    - user: organizations/tetrate/users/a33e4ccd-1e56-468e-ae46-3d5992462348
+    - user: organizations/tetrate/users/238cbe50-638c-432a-aa6c-329b7d342b33
+    - user: organizations/tetrate/users/bbe2ed49-bb47-4351-a047-adc864c27a37
+    - user: organizations/tetrate/users/9a3b30dd-eb6c-4400-b3e8-f268b46fee47
+    - user: organizations/tetrate/users/f7de5997-e9f3-48b0-8a6a-c31373c41995
+    - user: organizations/tetrate/users/004c60c3-8212-4bde-b27e-ad2e3c2fa77e
+    - user: organizations/tetrate/users/f93f6d45-075f-47ad-922c-6e2629d28006
+    - user: organizations/tetrate/users/b84c183a-76a1-4701-8588-5021ef2d6922
+    - user: organizations/tetrate/users/54645e61-6fe0-46de-a03a-91622faf0c69
+    - user: organizations/tetrate/users/8ed38397-34bd-4f79-b4ac-d0fb06663421
+    - user: organizations/tetrate/users/d7b36aba-51f4-4d62-bcf5-37baaa587180
+    - user: organizations/tetrate/users/bc147e3d-a2f6-4a15-9530-f49cd0e0114d
+    - user: organizations/tetrate/users/0afc67c2-7444-4dcc-a4d1-a511fd7252d6
+    - user: organizations/tetrate/users/71650664-88bd-4323-b9b9-d22ea9dfec46
+    - user: organizations/tetrate/users/438fa9f4-e0ee-4017-9d30-2142427f487a
+    - user: organizations/tetrate/users/605e5b32-4c3b-48ed-a359-6d975b43f48b
+    - user: organizations/tetrate/users/bb160b08-644e-4c19-924b-07e0e9e95680
+    - user: organizations/tetrate/users/36f3594e-63fa-4528-bab2-95a32124e0b2
+    - user: organizations/tetrate/users/67ed9603-97cf-440e-acae-87ab4a01ffc7
+    - user: organizations/tetrate/users/bc498232-ef11-4927-99d3-7f5543826417
+    - user: organizations/tetrate/users/84036a54-afdf-4bd0-9d7f-1331c7b8b488
+    - user: organizations/tetrate/users/89c5d936-cc2d-4d6b-9b6c-599bb459e65b
+    - user: organizations/tetrate/users/30e13eb0-972c-4191-b006-92324afdc818
+    - user: organizations/tetrate/users/a99443a5-313e-4bdf-a2fa-a5177d7f97bb
+    - user: organizations/tetrate/users/6c4c3a4c-8881-4795-a11f-d0a407eb30c9
+    - user: organizations/tetrate/users/b3961cbb-2150-4b5e-9117-8160df311e24
+    - user: organizations/tetrate/users/67a50e60-5868-4c0a-af52-ce4036a3586e
+    - user: organizations/tetrate/users/822e13d4-4b9b-4e59-900b-6b26fcc9f623
+    - user: organizations/tetrate/users/b3f7d21f-7ada-4451-be9f-e27bbc817740
+    - user: organizations/tetrate/users/d031dbfb-f67e-44f3-88c5-b2fd6902d72c
+    - user: organizations/tetrate/users/f162205b-862c-4c70-8404-744db8f0af5f
+    - user: organizations/tetrate/users/e4e6ca4e-839b-4ce6-b03d-6f51a1657532
+    - user: organizations/tetrate/users/789f9d13-4a37-4a51-8b5f-f97a44963d3c
+    - user: organizations/tetrate/users/567b7e06-bc62-4471-ba62-aaf43dfc36c3
+    - user: organizations/tetrate/users/195d6290-eb80-4a80-8ceb-dd6eef3ce988
+    - user: organizations/tetrate/users/d833238d-8081-4527-8848-43755cfb7af3

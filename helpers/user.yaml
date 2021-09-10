@@ -20,13 +20,3 @@ spec:
   description: $USER
   members:
     - organizations/tetrate/users/$USER_GUID
----
-apiVersion: rbac.tsb.tetrate.io/v2
-kind: OrganizationAccessBindings
-metadata:
-  organization: tetrate
-spec:
-  allow:
-  - role: rbac/clusterreader
-    subjects:
-    - user: organizations/tetrate/users/$USER_GUID
