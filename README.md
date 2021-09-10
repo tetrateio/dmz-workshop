@@ -1,5 +1,5 @@
 # Overview
-This workshop provides Platform Operators, Application Developers, and Application Operators with hands on experience deploying and securing multi-cloud applications utilizing Tetrate Service Bridge.  Includeed are presentations, demos and hands on labs.
+This workshop provides Platform Operators, Application Developers, and Application Operators with hands on experience deploying and securing multi-cloud applications utilizing Tetrate Service Bridge.  Included are presentations, demos and hands on labs.
 
 The target state infrastucture archiecture is comprised of 5 kubernetes clusters:
 - 2 clusters in the public cloud deployed in an east region and a west region
