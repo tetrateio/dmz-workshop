@@ -3,13 +3,12 @@ Our applications are deployed but we need to create tenancy for our applications
 
 ![Base Diagram](../images/02-tenant.png)
 
-As we ensured with our privous lab, prior to continuing ensure you have set an environment variable in the shell you are using named `PREFIX`.  You will also want to ensure that your `tctl` CLI is targeted and logged into the TSB management plane.
+As we ensured with our previous lab, prior to continuing ensure you have set an environment variable in the shell you are using named `PREFIX`.  You will also want to ensure that your `tctl` CLI is targeted and logged into the TSB management plane.
 
 ```bash
-export PREFIX=abz
+export PREFIX=<ASSIGNED PREFIX>
 
-tctl config clusters set default --bridge-address <TSB-MGMT-PLANE-ADDRESS>:443
-tctl login --org tetrate --tenant $PREFIX-tetrate --username <TSB-USER> --password <TSB-PWD>
+~/login-tctl.sh
 ```
 
 ## Create Tenants
