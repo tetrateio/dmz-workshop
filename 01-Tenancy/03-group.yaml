@@ -64,11 +64,11 @@ kind: Group
 metadata:
   tenant: $PREFIX-tetrate
   organization: tetrate
-  workspace: $PREFIX-dmz
-  name: gateway
+  workspace: $PREFIX-secure-app
+  name: dmz-gateway
 spec:
-  displayName: gateway
-  description: gateway
+  displayName: dmz-gateway
+  description: dmz-gateway
   namespaceSelector:
     names:
       - "dmz/$PREFIX-dmz"

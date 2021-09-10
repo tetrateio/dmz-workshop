@@ -3,8 +3,8 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Tier1Gateway
 metadata:
   name: gateway-bookinfo
-  group: gateway
-  workspace: $PREFIX-dmz
+  group: dmz-gateway
+  workspace: $PREFIX-secure-app
   tenant: $PREFIX-tetrate
   organization: tetrate
 spec:

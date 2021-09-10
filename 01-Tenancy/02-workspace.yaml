@@ -24,6 +24,7 @@ spec:
   namespaceSelector:
     names:
       - "*/$PREFIX-demo-secure"
+      - "*/$PREFIX-dmz"
 ---
 apiversion: api.tsb.tetrate.io/v2
 kind: Workspace
@@ -37,19 +38,6 @@ spec:
   namespaceSelector:
     names:
       - "*/$PREFIX-bookinfo"
----
-apiversion: api.tsb.tetrate.io/v2
-kind: Workspace
-metadata:
-  tenant: $PREFIX-tetrate
-  organization: tetrate
-  name: $PREFIX-dmz
-spec:
-  description: $PREFIX-dmz
-  displayName: $PREFIX-dmz
-  namespaceSelector:
-    names:
-      - "dmz/$PREFIX-dmz"
 ---
 apiVersion: rbac.tsb.tetrate.io/v2
 kind: WorkspaceAccessBindings
@@ -95,24 +83,6 @@ metadata:
   organization: tetrate
   tenant: $PREFIX-tetrate
   workspace:  $PREFIX-secure-app
-spec:
-  defaultSecuritySetting:
-    authenticationSettings:
-      trafficMode: REQUIRED
-    authorization:
-      mode: CUSTOM
-      serviceAccounts:
-      - '*/*'
-  displayName: secure-default
----
-apiVersion: api.tsb.tetrate.io/v2
-kind: WorkspaceSetting
-metadata:
-  displayName: secure-default
-  name: secure-default
-  organization: tetrate
-  tenant: $PREFIX-tetrate
-  workspace:  $PREFIX-dmz
 spec:
   defaultSecuritySetting:
     authenticationSettings:
