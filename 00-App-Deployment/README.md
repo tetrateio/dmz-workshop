@@ -12,7 +12,7 @@ Prior to installing ensure you have set an environment variable in the shell you
 ```bash
 export PREFIX=abz
 ```
-
+If at any point during the exercise you execute the commands in the wrong cluster worry not. Just rerun the command but replace kubectl apply -f - to  kubectl delete -f -
 ### Insecure Application
 The insecure application is comprised of a frontend and a backend service plus an Istio IngressGateway, all deployed to a dedicated namespace.  Ensure your kube context is targeted the `public cloud east` cluster.  Deploy the applications and Istio IngressGateway using `kubectl`.
 
@@ -112,13 +112,27 @@ Having changed the context . You may now execute the following commands.
 envsubst < 00-App-Deployment/cloud-west/app.yaml | kubectl apply -f -
 envsubst < 00-App-Deployment/cloud-west/cluster-ingress-gw.yaml | kubectl apply -f -
 ```
-I DO NOT SEE AN PRIVATE EAST CLUSTER ?????????
 
 2 - Ensure your kube context is targeted the `private east` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
+
+You may find the private context by executing the following command
+```bash
+kubectx | grep -E "oc-.*east"
+```
+Using kubectx as explained above you can change into this context and then execute the following commands.
+
 ```bash
 envsubst < 00-App-Deployment/private-east/app.yaml | kubectl apply -f -
 envsubst < 00-App-Deployment/private-east/cluster-ingress-gw.yaml | kubectl apply -f -
 ```
+If you get the following error
+error: You must be logged in to the server (the server has asked for the client to provide credentials)
+
+Please run the following command
+```bash
+~/login-openshift.sh
+```
+
 
 3 - Ensure your kube context is targeted the `private west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
 ```bash
