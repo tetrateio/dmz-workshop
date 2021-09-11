@@ -2,8 +2,8 @@
 This workshop provides Platform Operators, Application Developers, and Application Operators with hands on experience deploying and securing multi-cloud applications utilizing Tetrate Service Bridge.  Included are presentations, demos and hands on labs.
 
 The target state infrastucture archiecture is comprised of 5 kubernetes clusters:
-- 2 clusters in the public cloud deployed in an east region and a west region
-- 2 clusters on-premises deployed in an east region and a west region.  Within the "east" region we will add legacy VM workloads to the env.
+- 2 clusters in the public cloud one deployed in the  east region and the other in  west region
+- 2 clusters on-premises one deployed in an east region and another in  west region.  Within the "east" region we will add legacy VM workloads to the env.
 - One cluster deployed in a "DMZ" that facilitates a controlled point for securing communication traversing public and private clouds.
 
 ![Base Diagram](images/infra-arch.png)
@@ -26,6 +26,12 @@ IMPORTANT: Each new exercise builds upon the preceding lab, so please do not ski
 The majority of the workshop will be executed via a jumpbox that has all the prerequisite CLIs installed.  Using the shared google doc provided by, *checkout* a jumpbox by adding your name to the sheet in the `Reserved Workshop User` column.  This shared document has TSB user/pwd and IP address for your jumpbox.
 
 - Access jumpbox using the private key provided by tetrate:
+
+Please run the follwoing command to change permissions for file. 
+```bash
+chmod 400 abz.pem
+```
+ 
 ```bash
 ssh -i abz.pem ec2-user@<JUMPBOX IP ADDRESS>
 ```
