@@ -16,6 +16,22 @@ export PREFIX=abz
 ### Insecure Application
 The insecure application is comprised of a frontend and a backend service plus an Istio IngressGateway, all deployed to a dedicated namespace.  Ensure your kube context is targeted the `public cloud east` cluster.  Deploy the applications and Istio IngressGateway using `kubectl`.
 
+To check for current workspace excute the command kubectx
+
+```bash
+kubectx
+```
+
+You should see a sample output as shown below 
+```bash
+default/api-oc-ms-demo-east-cx-tetrate-info:6443/kube:admin
+default/api-oc-ms-demo-west-cx-tetrate-info:6443/kube:admin
+gke_abz-env_us-east4_dmz
+gke_abz-env_us-east4_public-east-4
+gke_abz-env_us-west1_public-west-4
+```
+The context that is active will be highlighted.
+
 ```bash
 envsubst < 00-App-Deployment/cloud-east/app.yaml | kubectl apply -f -
 envsubst < 00-App-Deployment/cloud-east/cluster-ingress-gw.yaml | kubectl apply -f -
@@ -73,14 +89,30 @@ Open your browser and navigate to `<JUMPHOST EXTERNAL IP>:8888`.  Enter `backend
 
 ![Base Diagram](../images/01-app.png)
 
+You may now choose to close the port forward in the shell by pressing Ctrl-C . If you do not choose to do this please ensure that you choose a different port ( port other than 8888 ) for  port forwarding in the Secure Application example below.
+
 ### Secure Application
 The secure application is identical to the insecure application, with the exceeption that it is deployed to 3 different kubernetes clusters that are part of a different trust domain.  
 
-1 - Ensure your kube context is targeted the `public cloud west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
+1 - Ensure your kube context is targeted the `public cloud west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`. If you do not know how to change context follow the steps below.
+execute the command
+```bash
+kubectx
+```
+
+Search for the entry containing public and west . Now with that entry execute the command
+```bash
+kubectx gke_abz-env_us-west1_public-west-4
+```
+In my case the context containing west and public was gke_abz-env_us-west1_public-west-4 . Please replace with your entry.
+
+Having changed the context . You may now execute the following commands.
+
 ```bash
 envsubst < 00-App-Deployment/cloud-west/app.yaml | kubectl apply -f -
 envsubst < 00-App-Deployment/cloud-west/cluster-ingress-gw.yaml | kubectl apply -f -
 ```
+I DO NOT SEE AN PRIVATE EAST CLUSTER ?????????
 
 2 - Ensure your kube context is targeted the `private east` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
 ```bash
