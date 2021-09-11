@@ -12,9 +12,25 @@ Prior to installing ensure you have set an environment variable in the shell you
 ```bash
 export PREFIX=abz
 ```
-
+If at any point during the exercise you execute the commands in the wrong cluster worry not. Just rerun the command but replace kubectl apply -f - to  kubectl delete -f -
 ### Insecure Application
 The insecure application is comprised of a frontend and a backend service plus an Istio IngressGateway, all deployed to a dedicated namespace.  Ensure your kube context is targeted the `public cloud east` cluster.  Deploy the applications and Istio IngressGateway using `kubectl`.
+
+To check for current workspace excute the command kubectx
+
+```bash
+kubectx
+```
+
+You should see a sample output as shown below 
+```bash
+default/api-oc-ms-demo-east-cx-tetrate-info:6443/kube:admin
+default/api-oc-ms-demo-west-cx-tetrate-info:6443/kube:admin
+gke_abz-env_us-east4_dmz
+gke_abz-env_us-east4_public-east-4
+gke_abz-env_us-west1_public-west-4
+```
+The context that is active will be highlighted.
 
 ```bash
 envsubst < 00-App-Deployment/cloud-east/app.yaml | kubectl apply -f -
@@ -73,20 +89,50 @@ Open your browser and navigate to `<JUMPHOST EXTERNAL IP>:8888`.  Enter `backend
 
 ![Base Diagram](../images/01-app.png)
 
+You may now choose to close the port forward in the shell by pressing Ctrl-C . If you do not choose to do this please ensure that you choose a different port ( port other than 8888 ) for  port forwarding in the Secure Application example below.
+
 ### Secure Application
 The secure application is identical to the insecure application, with the exceeption that it is deployed to 3 different kubernetes clusters that are part of a different trust domain.  
 
-1 - Ensure your kube context is targeted the `public cloud west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
+1 - Ensure your kube context is targeted the `public cloud west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`. If you do not know how to change context follow the steps below.
+execute the command
+```bash
+kubectx
+```
+
+Search for the entry containing public and west . Now with that entry execute the command
+```bash
+kubectx <your_context_containing_public_west>
+```
+In my case the context containing west and public was gke_abz-env_us-west1_public-west-4 . Please replace with your entry.
+
+Having changed the context . You may now execute the following commands.
+
 ```bash
 envsubst < 00-App-Deployment/cloud-west/app.yaml | kubectl apply -f -
 envsubst < 00-App-Deployment/cloud-west/cluster-ingress-gw.yaml | kubectl apply -f -
 ```
 
 2 - Ensure your kube context is targeted the `private east` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
+
+You may find the private context by executing the following command
+```bash
+kubectx | grep -E "oc-.*east"
+```
+Using kubectx as explained above you can change into this context and then execute the following commands.
+
 ```bash
 envsubst < 00-App-Deployment/private-east/app.yaml | kubectl apply -f -
 envsubst < 00-App-Deployment/private-east/cluster-ingress-gw.yaml | kubectl apply -f -
 ```
+If you get the following error
+error: You must be logged in to the server (the server has asked for the client to provide credentials)
+
+Please run the following command
+```bash
+~/login-openshift.sh
+```
+
 
 3 - Ensure your kube context is targeted the `private west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
 ```bash
@@ -95,6 +141,13 @@ envsubst < 00-App-Deployment/private-west/cluster-ingress-gw.yaml | kubectl appl
 ```
 
 You can verify the secure verison of the application utilizing the same method of `kubectl port-forward` described in the previous sectionn but only change the namespace you are targeting with the command.
+
+We should give the full command here as well. If you have the earlier port-forwarding please change the port to something else or else continue.
+
+Quick way to check is to run the command as is. If it fails change the port :-)
+```bash
+kubectl port-forward -n $PREFIX-demo-secure $(kubectl get po -n $PREFIX-demo-secure --output=jsonpath={.items..metadata.name} -l app=backend) --address 0.0.0.0 8888:8888
+```
 
 ### Bookinfo Application
 The bookinfo application is also going to be deployed to the 2 private cloud kubernetes clusters that are part of the "Secure" zone.
