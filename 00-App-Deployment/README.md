@@ -102,7 +102,7 @@ kubectx
 
 Search for the entry containing public and west . Now with that entry execute the command
 ```bash
-kubectx gke_abz-env_us-west1_public-west-4
+kubectx <your_context_containing_public_west>
 ```
 In my case the context containing west and public was gke_abz-env_us-west1_public-west-4 . Please replace with your entry.
 
@@ -141,6 +141,13 @@ envsubst < 00-App-Deployment/private-west/cluster-ingress-gw.yaml | kubectl appl
 ```
 
 You can verify the secure verison of the application utilizing the same method of `kubectl port-forward` described in the previous sectionn but only change the namespace you are targeting with the command.
+
+We should give the full command here as well. If you have the earlier port-forwarding please change the port to something else or else continue.
+
+Quick way to check is to run the command as is. If it fails change the port :-)
+```bash
+kubectl port-forward -n $PREFIX-demo-secure $(kubectl get po -n $PREFIX-demo-secure --output=jsonpath={.items..metadata.name} -l app=backend) --address 0.0.0.0 8888:8888
+```
 
 ### Bookinfo Application
 The bookinfo application is also going to be deployed to the 2 private cloud kubernetes clusters that are part of the "Secure" zone.
