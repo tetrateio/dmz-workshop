@@ -33,15 +33,45 @@ Now lets utilize the TSB applicatoion to troubleshoot and debug our application.
 
 ![Base Diagram](../images/07-select.png)
 
-- Topology
-- Dashboard Registry
-- Trace
+- From the TSB Dashboard view, click on `Topology` within the menu near in the top-middle portion of the screen.  Here you will see all you services' communication outlined and also color coded via AppDex score indicating application hotspots.
+
+![Base Diagram](../images/07-trouble1.png)
+
+In our scenario `svcb` was configured to have latency and `svcc` was configured to return 500 HTTP  response codes errors for a portion of requests.  Click on the icon for `svcc` and you'll note we can view detailed R.E.D Metrics: Response, Error Rate, and Duration/Latency.  Addiotionally, this information is aggregated by API endpoint.
+
+![Base Diagram](../images/07-trouble2.png)
+
+- Return to the Service List view of the Dashboard by clicking on `Services` within the menu near in the top-middle portion of the screen.  Here you will see table that displays similar R.E.D metrics for all services.  This can help us pinpoint that some services are experiencing latency and also a higher error rate.  
+
+![Base Diagram](../images/07-trouble3.png)
+
+- Imagine that you simply had a report that "The Frontend service is slow and has errors".  This view can help pinpoint which microservice has errors.   Distributed Tracing will also assist if it is not immediately evident which microservice is the culprit.  On the far right-hand side of the screen click on the `Trace` button for our Frontend service.
+
+This opens up a view of traces that are being collected in the system.  Any trace displayed that has the duration highlighted in red represents a request that resulted in a non-200 HTTP Response Code.  You can limit the traces displayed to only error traces by changing the value in the `display` text box or by selecting a specific http response code filter in the Status Code drop down.  However, we do not have many traces to it should be easy to find and error trace.  Once you do, click the `Go` button to view the trace details.
+
+![Base Diagram](../images/07-trouble4.png)
+
+- Click the `Expand` button new the top to reveal all microservices that contain a `span` for the distributed trace we are exploring.  From here we are able to pinpoint 2 concrete issues.  First, we can see that processing within `svcb` took slightly over 2 seconds!
+
+![Base Diagram](../images/07-trouble5.png)
+
+Secondly, we can see that the `svcc` http GET request returned an 500 error code.
+
+![Base Diagram](../images/07-trouble6.png)
 
 - Let remove the simulated failures for the microservices.  Execute the following `curl` commands:
 
 ```bash
-curl https://insecure.public.foo.cloud.zwickey.net/proxy/\?url\=svcc%2Ferrors%2F0\&auth\=\&cachebuster\=123
-curl https://insecure.public.foo.cloud.zwickey.net/proxy/\?url\=svcb%2Flatency%2F0\&auth\=\&cachebuster\=456
+curl https://insecure.public.$PREFIX.cloud.zwickey.net/proxy/\?url\=svcc%2Ferrors%2F0\&auth\=\&cachebuster\=123
+curl https://insecure.public.$PREFIX.cloud.zwickey.net/proxy/\?url\=svcb%2Flatency%2F0\&auth\=\&cachebuster\=456
 ```
 
-- Metrics???
+- Return to the browser tab that has the Frontend application open and refresh 10-15 times.  You should no longer receive any HTTP errors and the latency should be gone.
+
+- Return the the TSB UI and refresh that browser page.  Once again click on the `Trace` button for the Frontend service.  Sort the traces by start time in descending order by clicking on the `start time` column heading.  You'll see that there are no longer any error traces and all frontend calls are responding with a latency of only a few milliseconds.  Our app is now healthy!
+
+![Base Diagram](../images/07-trouble7.png)
+
+- Lastly, reurn to the Topology view by clicking on `Topology` within the menu near in the top-middle portion of the screen.  Once again click on the icon for `svcc` and you'll now see that the R.E.D. metrics no longer show errors or latency API calls.
+
+![Base Diagram](../images/07-trouble8.png)
