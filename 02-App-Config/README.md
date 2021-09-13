@@ -1,10 +1,10 @@
 # Overview
-Up until this point we have deployed our applications and setup multi-tenancy within TSB.  However, the applications are not accessible external to the kubernetes clusters and the are not configured to take full advantage of the global service mesh.  Typically within an Istio service mesh, applications must be configured with `Gateways`, `VirtualServices`, `DestinationRules`, and `ServiceEntries` to control traffic.  TSB simplifies this greatly.
+Up until this point we have deployed our applications and setup multi-tenancy within TSB.  However, the applications are not accessible external to the Kubernetes clusters and they are not configured to take full advantage of the global service mesh.  Typically within an Istio service mesh, applications must be configured with `Gateways`, `VirtualServices`, `DestinationRules`, and `ServiceEntries` to control traffic.  TSB simplifies this greatly.
 
 ## Configuring Applications within TSB
 As we ensured with our previous labs, prior to continuing ensure you have set an environment variable in the shell you are using named `PREFIX`.  You will also want to ensure that your `tctl` CLI is targeted and logged into the TSB management plane.
 
-We will be creating nearly identical configurations in all 4 of our application kubernetes clusters.  Using the `tctl apply` command create a Tetrate `IngressGateway` for each cluster.  Under the covers TSB will create all the needed service mesh configuration objects. Execute the following apply commands and then we'll inspect the configuration a bit further
+We will be creating nearly identical configurations in all 4 of our application Kubernetes clusters.  Using the `tctl apply` command create a Tetrate `IngressGateway` for each cluster.  Under the covers TSB will create all the needed service mesh configuration objects. Execute the following apply commands and then we'll inspect the configuration a bit further
 
 ```bash
 envsubst < 02-App-Config/01-tsb-cloud-east.yaml | tctl apply -f -  
@@ -13,7 +13,7 @@ envsubst < 02-App-Config/03-tsb-private-east.yaml | tctl apply -f -
 envsubst < 02-App-Config/04-tsb-private-west.yaml | tctl apply -f -  
 ```
 
-Lets dig into what what was actually configured via TSB and within the global service mesh.  We will use the public cloud west cluster, which is part of the *Secure* application workspace.  Inspect the file `02-App-Config/02-tsb-cloud-west.yaml`
+Let's dig into what what was actually configured via TSB and within the global service mesh.  We will use the public cloud west cluster, which is part of the *Secure* application workspace.  Inspect the file `02-App-Config/02-tsb-cloud-west.yaml`
 
 - The first item you'll note is that a set of metadata is provided that maps this `IngressGateway` object to all the relevant multi-tenancy objects; Tenants, Workspaces, and Groups.  If we had configured this via the web UI that metadata would have been picked up automatically.
 
@@ -40,7 +40,7 @@ workloadSelector:
 ...  
 ```
 
-You can easily verify that this maps to the correct envoy gateway pod using a simple `kubectl command`.  Ensure your kubecontext is pointed at the public cloud west cluster.  Take note of the patching `app=` label.
+You can easily verify that this maps to the correct Envoy gateway pod using a simple `kubectl command`.  Ensure your kubecontext is pointed at the public cloud west cluster.  Take note of the patching `app=` label.
 
 ```bash
 kubectl get po -n $PREFIX-demo-secure -l istio=ingressgateway --show-labels
@@ -71,7 +71,7 @@ We have deployed our services across 4 clusters -- 2 public cloud clusters and 2
 
 Open your browser and navigate to https://insecure.public.$PREFIX.cloud.zwickey.net.  Make sure you replace $PREFIX in the URL with your prefix value.  The application should display in your browser.  Enter the internal address for the backend running in the public cloud east cluster -- `insecure.$PREFIX.public.mesh`.  This will cause the frontend microservice to call to the details microservice over the service mesh and return the display the response via the frontend app.  
 
-Click that back button and this time enter the internal address for the backend running in the *public cloud west* Cluster -- `secure.$PREFIX.public.mesh`.  The frontend application will use global service discovery to find the application running in a completely different kubernetes cluster.  It will then utilize the mesh to route securely via mTLS to call the backend service in the cluster.  The reponse you see in the frontend application UI will confirm which cluster responsed to the frontend.
+Click that back button and this time enter the internal address for the backend running in the *public cloud west* Cluster -- `secure.$PREFIX.public.mesh`.  The frontend application will use global service discovery to find the application running in a completely different kubernetes cluster.  It will then utilize the mesh to route securely via mTLS to call the backend service in the cluster.  The reponse you see in the frontend application UI will confirm which cluster responded to the frontend.
 
 ![Base Diagram](../images/02-app.png)
 
@@ -98,7 +98,7 @@ Spec:
   Export To:
     *
   Hosts:
-    abz.secure.public.mesh
+    $PREFIX.secure.public.mesh
   Location:  MESH_INTERNAL
   Ports:
     Name:      http
@@ -108,6 +108,6 @@ Spec:
 ...
 ```
 
-Lasly, one more time click that back button and this time enter the internal address for the backend running in one of the *private cloud* Clusters -- `west.secure.$PREFIX.private.mesh`.  This time the frontend will fail.  Why is that?  We have not configured the DMZ to facilitate communication that transits through the DMZ, which is needed for Public->Private cloud communication (or visa versa).  We'll configure that in the next lab.
+Lastly, one more time click that back button and this time enter the internal address for the backend running in one of the *private cloud* Clusters -- `west.secure.$PREFIX.private.mesh`.  This time the frontend will fail.  Why is that?  We have not configured the DMZ to facilitate communication that transits through the DMZ, which is needed for Public->Private cloud communication (or visa versa).  We'll configure that in the next lab.
 
-Additionally, at this point you may be wondering why the *insecure* app was able to communicate with the *secure* app.  Shouldn't this be prohibited?  Absolutely!  Our application workspaces for the both the secure and insecure applications were purposefully configured with no default policy for global mesh authentication and authorization.  We'll also lock down our secure apps in the next lab.
+Additionally, at this point you may be wondering why the *insecure* app was able to communicate with the *secure* app.  Shouldn't this be prohibited?  Absolutely!  Our application workspaces for both the secure and insecure applications were purposefully configured with no default policy for global mesh authentication and authorization.  We'll also lock down our secure apps in the next lab.
