@@ -2,11 +2,11 @@
 : ${PREFIX?"Need to set PREFIX environment variable"}
 echo Env Prefix: $PREFIX
 
-export PRIVATE_EAST=default/api-oc-ms-demo-east-cx-tetrate-info:6443/kube:admin
-export PRIVATE_WEST=default/api-oc-ms-demo-west-cx-tetrate-info:6443/kube:admin
-export CLOUD_EAST=gke_abz-env_us-east4_public-east-4
-export CLOUD_WEST=gke_abz-env_us-west1_public-west-4
-export DMZ=gke_abz-env_us-east4_dmz
+export PRIVATE_EAST=private-east
+export PRIVATE_WEST=private-west
+export CLOUD_EAST=public-east
+export CLOUD_WEST=public-west
+export DMZ=dmz
 
 # TSB
 tctl login --org tetrate --tenant tetrate --username admin --password admin

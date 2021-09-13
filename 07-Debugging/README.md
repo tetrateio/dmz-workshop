@@ -3,13 +3,13 @@ One of the big benefits of a Service Mesh is the ability to gain insight into an
 
 ## Deploy the application
 
-- First we will need to deploy another helper application that can be used to simulate a misbehaving application and also demonstrate a more complex chain of microservices that call each other.  We will be configuring this in the Public Cloud East cluster, our insecure application, so ensure that your kubecontext is pointed to the public east cluster.  Deploy the sample proxy application using `kubectl apply`:
+- First we will need to deploy another helper application that can be used to simulate a misbehaving application and also demonstrate a more complex chain of microservices that call each other.  We will be configuring this in the `public-east` cluster, our insecure application.  Deploy the sample proxy application using `kubectl apply`:
 
 ```bash
-SVCNAME=svca envsubst < 07-Debugging/00-app.yaml | kubectl apply -f -
-SVCNAME=svcb envsubst < 07-Debugging/00-app.yaml | kubectl apply -f -
-SVCNAME=svcc envsubst < 07-Debugging/00-app.yaml | kubectl apply -f -
-SVCNAME=svcd envsubst < 07-Debugging/00-app.yaml | kubectl apply -f -
+SVCNAME=svca envsubst < 07-Debugging/00-app.yaml | kubectl --context public-east apply -f -
+SVCNAME=svcb envsubst < 07-Debugging/00-app.yaml | kubectl --context public-east apply -f -
+SVCNAME=svcc envsubst < 07-Debugging/00-app.yaml | kubectl --context public-east apply -f -
+SVCNAME=svcd envsubst < 07-Debugging/00-app.yaml | kubectl --context public-east apply -f -
 ```
 - We can test our proxied application from our Frontend application that we have been utilizing throughout this workshop.  Open your browser and navigate to https://insecure.public.$PREFIX.cloud.zwickey.net.  Replace $PREFIX in the URL with your prefix value.  The application should display in your browser.  Enter the follwing address in the Backend HTTP URL text box:  `svca/proxy/svcb/proxy/svcc/proxy/svcd/proxy/backend`.  This will kickoff a microservice to microservice call chain that will traverse `svca -> svcb -> svcc -> svcd` before finally invoking our `backend` microservice.
 
