@@ -18,7 +18,7 @@ Since a `Tenant` is at the top of the multi-tenancy hierarchy, that is the first
 envsubst < 01-Tenancy/01-tenant.yaml | tctl apply -f -  
 ```
 
-Lets take a close look at the API Objects that defined the `Tenant`.
+Let's take a close look at the API Objects that defined the `Tenant`.
 
 1. Inspect the file `01-Tenancy/01-tenant.yaml`.  This API Object is about as simple as it gets; the `organization` and `name` fields are the most relevant as these uniquely identify the tenant.
 ```yaml
@@ -41,7 +41,7 @@ apiVersion: rbac.tsb.tetrate.io/v2
 kind: TenantAccessBindings
 metadata:
   organization: tetrate
-  tenant: abz-tetrate
+  tenant: $PREFIX-tetrate
 spec:
   allow:
   - role: rbac/admin
@@ -55,13 +55,13 @@ Next we will create a few different `Workspaces` that will model the various app
 2. Secure App
 3. Bookinfo App
 
-Apply the configuration using the `tctl`:
+Apply the configuration using the `tctl apply` command:
 
 ```bash
 envsubst < 01-Tenancy/02-workspace.yaml | tctl apply -f -  
 ```
 
-Lets inspect the workspace configuration applied in more detail.  Each workspace is nearly identical; though obviously meta-data such as *name* need to be unique.  `Workspaces` also have a parent `Tenant`.  Additionally, workspaces are the construct that maps the logical multi-tenancy constructs of TSB to the physical infrastructure.  This is done via selectors that are made up of a cluster/namespace tuple.  Wildcards are also supported.  Inspect the file `01-Tenancy/02-workspace.yaml` to understand this mapping.
+Let's inspect the workspace configuration applied in more detail.  Each workspace is nearly identical; though obviously meta-data such as *name* need to be unique.  `Workspaces` also have a parent `Tenant`.  Additionally, workspaces are the construct that maps the logical multi-tenancy constructs of TSB to the physical infrastructure.  This is done via selectors that are made up of a cluster/namespace tuple.  Wildcards are also supported.  Inspect the file `01-Tenancy/02-workspace.yaml` to understand this mapping.
 
 ```yaml
 ---
@@ -80,7 +80,7 @@ spec:
 ```
 
 ## Create Workspace Groups
-Lastly we'll create `Groups`, which is the contstruct within the TSB multi-tenancy model that contains service mesh configuration for an application.  For now we'll only create a set of `Gateway Groups`, which is the bear minumim needed to expose our services via the ingress gateway we have already deployed.  The configuration is deployed to TSB using the `tctl apply` command:
+Lastly we'll create `Groups`, which is the contstruct within the TSB multi-tenancy model that contains service mesh configuration for an application.  For now we'll only create a set of `Gateway Groups`, which is the bare minimum needed to expose our services via the ingress gateway we have already deployed.  The configuration is deployed to TSB using the `tctl apply` command:
 
 ```bash
 envsubst < 01-Tenancy/03-group.yaml | tctl apply -f -
@@ -106,4 +106,4 @@ spec:
   configMode: BRIDGED
 ```
 
-Each of the obects we've created so far have been logical, providing for multi-tenancy and RBAC control.  However, next we will begin configuring our applications within TSB and the global service mesh!
+Each of the objects we've created so far have been logical, providing for multi-tenancy and RBAC control.  However, next we will begin configuring our applications within TSB and the global service mesh!
