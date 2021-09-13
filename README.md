@@ -1,9 +1,9 @@
 # Overview
 This workshop provides Platform Operators, Application Developers, and Application Operators with hands on experience deploying and securing multi-cloud applications utilizing Tetrate Service Bridge.  Included are presentations, demos and hands on labs.
 
-The target state infrastucture archiecture is comprised of 5 kubernetes clusters:
-- 2 clusters in the public cloud one deployed in the  east region and the other in  west region
-- 2 clusters on-premises one deployed in an east region and another in  west region.  Within the "east" region we will add legacy VM workloads to the env.
+The target state infrastucture architecture is comprised of 5 Kubernetes clusters:
+- 2 clusters in the public cloud one deployed in the east region and the other in west region
+- 2 clusters on-premises one deployed in an east region and another in west region.  Within the "east" region we will add legacy VM workloads to the env.
 - One cluster deployed in a "DMZ" that facilitates a controlled point for securing communication traversing public and private clouds.
 
 ![Base Diagram](images/infra-arch.png)
@@ -35,7 +35,7 @@ chmod 400 abz.pem
 ```bash
 ssh -i abz.pem ec2-user@<JUMPBOX IP ADDRESS>
 ```
-- Throughout the workshop you will be required to have an environment variable set in your jumpbox session named `PREFIX`.  This will be used to ensure your various kubernetes objects and TSB objects have unique names.  The PREFIX assigned to you is found in the shared google docs in the `Prefix` column of the jumpbox you checked out.  export this env var:
+- Throughout the workshop you will be required to have an environment variable set in your jumpbox session named `PREFIX`.  This will be used to ensure your various Kubernetes objects and TSB objects have unique names.  The PREFIX assigned to you is found in the shared Google docs in the `Prefix` column of the jumpbox you checked out.  Export this env var:
 ```bash
 export PREFIX=<YOUR JUIMPBOX PREFIX>
 ```
@@ -47,20 +47,20 @@ cd ~/dmz-workshop
 git pull
 ```
 
-- The jumpbox should already be logged into each kubernetes cluster.  If you recieve a message that you are not logged in you can execute the 2 helper scripts on the jumpbox that will log you in.
+- The jumpbox should already be logged into each kubernetes cluster.  If you receive a message that you are not logged in you can execute the 2 helper scripts on the jumpbox that will log you in.
 ```bash
 ~/login-cloud.sh
 ~/login-openshift.sh
 
 ```
 
-- During your workshop you will be utilizing the TCTL CLI.  If you recieve a message that you are not logged in you can execute the helper script on the jumpbox that will log you in.
+- During your workshop you will be utilizing the TCTL CLI.  If you receive a message that you are not logged in you can execute the helper script on the jumpbox that will log you in.
 ```bash
 ~/login-tctl.sh
 
 ```
 
-- You will also need to frequently change kubernetes clusters via your kubecontext.  The jumpbox has `kubectx` installed to facilitate this.  You can list contexts by issuing the command `kubectx` and you can change you context with the command `kubectx <CONTEXT NAME>`.
+- You will also need to frequently change Kubernetes clusters via your kubecontext.  The jumpbox has `kubectx` installed to facilitate this.  You can list contexts by issuing the command `kubectx` and you can change you context with the command `kubectx <CONTEXT NAME>`.
 
 ## Applications
 
