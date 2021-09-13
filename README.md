@@ -60,7 +60,7 @@ git pull
 
 ```
 
-- You will also need to frequently change Kubernetes clusters via your kubecontext.  The jumpbox has `kubectx` installed to facilitate this.  You can list contexts by issuing the command `kubectx` and you can change you context with the command `kubectx <CONTEXT NAME>`.
+- Each `kubectl` command will contain a `--context` flag that will direct the API request to the correct kubernetes server.  However, at times you may want to change your active kubernetes context to a specific cluster in order to execute ad-hoc `kubectl` commands.  The jumpbox has `kubectx` installed to facilitate this.  You can list contexts by issuing the command `kubectx` and you can change you context with the command `kubectx <CONTEXT NAME>`.  Valid contexts are `public-east`, `public-west`, `private-east`, `private-west`, and `dmz`.
 
 ## Applications
 

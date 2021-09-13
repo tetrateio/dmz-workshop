@@ -27,24 +27,22 @@ We will onboard our backend and frontend applications into our Mesh to demonstra
 For simplicity's sake, we'll utilize our jumpbox to run our VM applications; in other words our jumpbox will be onboarded into the Global Service Mesh.
 
 ### Containerized apps making request(s) to legacy app
-First we will onboard the jumpbox VM as the *Backend* application.  We will be able to utilze one of the Frontend container applications already deployed to the Global Service Mesh to test access to the backend app deployed to the VM.
+First we will onboard the jumpbox VM as the *Backend* application.  We will be able to utilze one of the Frontend container applications already deployed to the Global Service Mesh to test access to the backend app deployed to the VM.  
 
-1. First change your kubecontext to the `private east` cluster. Additionally, doublecheck that your `$PREFIX` environment variable is set correctly.  
-
-2. When we onboard a VM, the Istio objects that are created will need to refer to both internal and external IP addresses of the VM.  Execute a simple helper script that will query the local EC2 instance metadata server endpoint (`http://169.254.169.254/latest/meta-data`) and set environment variables with the IPs used in your env.
+1. When we onboard a VM, the Istio objects that are created will need to refer to both internal and external IP addresses of the VM.  Execute a simple helper script that will query the local EC2 instance metadata server endpoint (`http://169.254.169.254/latest/meta-data`) and set environment variables with the IPs used in your env.
 
 ```bash
 source 04-VM/vm-env.sh
 ``` 
 
-3. Our VM workloads will utilize a `ServiceAccount` named `vm-sa`.  Create this using kubectl:
+2. Our VM workloads will utilize a `ServiceAccount` named `vm-sa`.  Create this using kubectl:
 ```bash
-kubectl create sa vm-sa -n $PREFIX-demo-secure
+kubectl --context private-east create sa vm-sa -n $PREFIX-demo-secure
 ``` 
 
-4. Create `WorkloadEntry`, `Sidecar`, `Service` objects using `kubectl`:
+3. Create `WorkloadEntry`, `Sidecar`, `Service` objects using `kubectl`:
 ```bash
-envsubst < 04-VM/01-backend-vm.yaml | kubectl apply -f -
+envsubst < 04-VM/01-backend-vm.yaml | kubectl --context private-east apply -f -
 ``` 
 
 Lets examine the relevant portions of the config we just applied to prepare our mesh (and Kubernetes) to onboard the VM within the file `04-VM/01-backend-vm.yaml`
@@ -90,15 +88,17 @@ egress:
     - xcp-multicluster/*
 ```
 
-5. At this point our service mesh and Kubernetes cluster are configured and ready to go, but our Envoy proxy is not running or configured on our VM.  We'll use the sidecar-bootstrap command within the `tctl` cli to install the istio-proxy and join the VM to the mesh.  First, execute the command with the `--dry-run` flag so that you are able to see what is involved in the process of bootstrapping.
+5. At this point our service mesh and Kubernetes cluster are configured and ready to go, but our Envoy proxy is not running or configured on our VM.  We'll use the sidecar-bootstrap command within the `tctl` cli to install the istio-proxy and join the VM to the mesh.  We will also need to change our kubectx to the `private-east` cluster.  First, execute the command with the `--dry-run` flag so that you are able to see what is involved in the process of bootstrapping.
 
 ```bash
+kubectx private-east
 tctl x sidecar-bootstrap backend-vm -n $PREFIX-demo-secure --start-istio-proxy --ssh-key ~/abz.pem --dry-run
 ```
 
 Next, run the command without the dry run flag to complete the onboarding.  
 
 ```bash
+kubectx private-east
 tctl x sidecar-bootstrap backend-vm -n $PREFIX-demo-secure --start-istio-proxy --ssh-key ~/abz.pem 
 ```
 
@@ -184,7 +184,7 @@ Now we will onboard the jumpbox VM as the *frontend* application.  We will utili
 
 1. Create `WorkloadEntry`, `Sidecar`, `Service` objects using `kubectl`:
 ```bash
-envsubst < 04-VM/02-frontend-vm.yaml | kubectl apply -f -
+envsubst < 04-VM/02-frontend-vm.yaml | kubectl --context private-east apply -f -
 ```
 
 Feel free to inspect the config we just applied in the file `02-frontend-vm.yaml`.  However, you'll note this is nearly identical to the backend with the exception of object names and workload selectors.

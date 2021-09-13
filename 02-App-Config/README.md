@@ -75,10 +75,10 @@ Click that back button and this time enter the internal address for the backend 
 
 ![Base Diagram](../images/02-app.png)
 
-How did this work?  Change your kubecontext to the public cloud east cluster, which is where the frontend application you tested with is running.  You can view the global config that was automatically distributed across the mesh by executing the following command to show `ServiceEntries` that were created.  This configuration instructs the frontend's service mesh sidecar how to connect to the backend running on a different cluster.
+How did this work?  Well explore the configuration pushed out to our `public-east` cluster, which is where the frontend application you tested with is running.  You can view the global config that was automatically distributed across the mesh by executing the following command to show `ServiceEntries` that were created.  This configuration instructs the frontend's service mesh sidecar how to connect to the backend running on a different cluster.
 
 ```bash
-kubectl describe serviceentries.networking.istio.io -n xcp-multicluster gateway-secure-$PREFIX-public-mesh  
+kubectl --context public-east describe serviceentries.networking.istio.io -n xcp-multicluster gateway-secure-$PREFIX-public-mesh  
 ```
 
 ```bash

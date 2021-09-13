@@ -72,10 +72,10 @@ Then click the Topology tab in the top center portion of the UI.  This will disp
 
 Take note of the fact that the Tier1 Gateway is loadbalancing requests across both the private east and west clusters.  However, once a request arrives in a local cluster it always favors other local instances of dependent microservices.  Because all microservices from the bookinfo application are running fine in both clusters, we do not see any traffic flowing east/west between the Private clusters.
 
-- Let's simulate a *failure* of the details service.  We'll do this by scaling the replicas of the deployment to zero.  Change your kubecontext to the `private east` cluster and use kubectl to scale the details deployment to zero.
+- Let's simulate a *failure* of the details service.  We'll do this by scaling the replicas of the deployment to zero in our `private-east` cluster.  Use kubectl to scale the details deployment to zero:
 
 ```bash
-kubectl scale deployment details-v1 --replicas 0 -n $PREFIX-bookinfo
+kubectl --context private-east scale deployment details-v1 --replicas 0 -n $PREFIX-bookinfo
 ```
 
 Wait a few seconds for the pods to completely terminate.  Go back to the browser window that is open to the bookinfo application (`bookinfo.$PREFIX.cloud.zwickey.net`).   Refresh the page another 10-15 times.  You'll note you don't get any errors.  This is because immediately the mesh identifies the service that is unavailable and shifts requests to the details service to the healthy instances in the private west cluster.

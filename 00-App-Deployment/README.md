@@ -12,29 +12,13 @@ Prior to installing ensure you have set an environment variable in the shell you
 ```bash
 export PREFIX=abz
 ```
-If at any point during the exercise you execute the commands in the wrong cluster worry not. Just rerun the command but replace kubectl apply -f - to  kubectl delete -f -
+
 ### Insecure Application
-The insecure application is comprised of a frontend and a backend service plus an Istio IngressGateway, all deployed to a dedicated namespace.  Ensure your kube context is targeted the `public cloud east` cluster.  Deploy the applications and Istio IngressGateway using `kubectl`.
-
-To check for current workspace excute the command kubectx
+The insecure application is comprised of a frontend and a backend service plus an Istio IngressGateway, all deployed to a dedicated namespace.  Deploy the applications and Istio IngressGateway using `kubectl`.  Note that we are deploying this application to the `public-east` cluster via our `--context public-east` flag.
 
 ```bash
-kubectx
-```
-
-You should see a sample output as shown below 
-```bash
-default/api-oc-ms-demo-east-cx-tetrate-info:6443/kube:admin
-default/api-oc-ms-demo-west-cx-tetrate-info:6443/kube:admin
-gke_abz-env_us-east4_dmz
-gke_abz-env_us-east4_public-east-4
-gke_abz-env_us-west1_public-west-4
-```
-The context that is active will be highlighted.
-
-```bash
-envsubst < 00-App-Deployment/cloud-east/app.yaml | kubectl apply -f -
-envsubst < 00-App-Deployment/cloud-east/cluster-ingress-gw.yaml | kubectl apply -f -
+envsubst < 00-App-Deployment/cloud-east/app.yaml | kubectl --context public-east apply -f -
+envsubst < 00-App-Deployment/cloud-east/cluster-ingress-gw.yaml | kubectl --context public-east apply -f -
 ```
 
 While the application starts up, lets inspect the 2 items that introduce this application into the global service mesh.  
@@ -69,7 +53,7 @@ spec:
 
 Though this YAML file is fairly terse and simple, a lot was configured under the covers.  The Tetrate platform will translate this request into an `IstioOperator` deployment of an Istio `IngressGateway`.  You can view this configuration by executing:
 ```bash
-kubectl get istiooperator -n istio-gateway tsb-gateways -o yaml
+kubectl --context public-east get istiooperator -n istio-gateway tsb-gateways -o yaml
 ```
 
 By now our application should be running and pods/services introduced into the global service mesh.  We even have an Istio `IngressGateway` bound to an external load balancer and DNS entry (via `external-dns`).  However, we have not deployed any mesh configuration yet so our application will not be accessible external from the mesh.  For now we can verify our application is running and functioning properly in the mesh by port-forwarding.  
@@ -82,7 +66,7 @@ curl http://169.254.169.254/latest/meta-data/public-ipv4
 
 Then setup the port-forwarding
 ```bash
-kubectl port-forward -n $PREFIX-demo-insecure $(kubectl get po -n $PREFIX-demo-insecure --output=jsonpath={.items..metadata.name} -l app=frontend) --address 0.0.0.0 8888:8888
+kubectl --context public-east port-forward -n $PREFIX-demo-insecure $(kubectl --context public-east get po -n $PREFIX-demo-insecure --output=jsonpath={.items..metadata.name} -l app=frontend) --address 0.0.0.0 8888:8888
 ```
 
 Open your browser and navigate to `<JUMPHOST EXTERNAL IP>:8888`.  Enter `backend` in the Backend HTTP URL text box and submit the request.  This will cause the frontend microservice to call to the backend microservice over the service mesh and return the display the response via the frontend app.
@@ -94,68 +78,35 @@ You may now choose to close the port forward in the shell by pressing Ctrl-C . I
 ### Secure Application
 The secure application is identical to the insecure application, with the exceeption that it is deployed to 3 different kubernetes clusters that are part of a different trust domain.  
 
-1 - Ensure your kube context is targeted the `public cloud west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`. If you do not know how to change context follow the steps below.
-execute the command
-```bash
-kubectx
-```
-
-Search for the entry containing public and west . Now with that entry execute the command
-```bash
-kubectx <your_context_containing_public_west>
-```
-In my case the context containing west and public was gke_abz-env_us-west1_public-west-4 . Please replace with your entry.
-
-Having changed the context . You may now execute the following commands.
+1 - Deploy the application the appliction and Istio IngressGateway using `kubectl`. 
 
 ```bash
-envsubst < 00-App-Deployment/cloud-west/app.yaml | kubectl apply -f -
-envsubst < 00-App-Deployment/cloud-west/cluster-ingress-gw.yaml | kubectl apply -f -
+envsubst < 00-App-Deployment/cloud-west/app.yaml | kubectl --context public-west apply -f -
+envsubst < 00-App-Deployment/cloud-west/cluster-ingress-gw.yaml | kubectl --context public-west apply -f -
+envsubst < 00-App-Deployment/private-east/app.yaml | kubectl --context private-east apply -f -
+envsubst < 00-App-Deployment/private-east/cluster-ingress-gw.yaml | kubectl --context private-east apply -f -
+envsubst < 00-App-Deployment/private-west/app.yaml | kubectl --context private-west apply -f -
+envsubst < 00-App-Deployment/private-west/cluster-ingress-gw.yaml | kubectl --context private-west apply -f -
 ```
 
-2 - Ensure your kube context is targeted the `private east` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
+If you get the following error:
+`error: You must be logged in to the server (the server has asked for the client to provide credentials)`
 
-You may find the private context by executing the following command
-```bash
-kubectx | grep -E "oc-.*east"
-```
-Using kubectx as explained above you can change into this context and then execute the following commands.
-
-```bash
-envsubst < 00-App-Deployment/private-east/app.yaml | kubectl apply -f -
-envsubst < 00-App-Deployment/private-east/cluster-ingress-gw.yaml | kubectl apply -f -
-```
-If you get the following error
-error: You must be logged in to the server (the server has asked for the client to provide credentials)
-
-Please run the following command
+Please run the following command:
 ```bash
 ~/login-openshift.sh
 ```
 
-
-3 - Ensure your kube context is targeted the `private west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
-```bash
-envsubst < 00-App-Deployment/private-west/app.yaml | kubectl apply -f -
-envsubst < 00-App-Deployment/private-west/cluster-ingress-gw.yaml | kubectl apply -f -
-```
-
-You can verify the secure verison of the application utilizing the same method of `kubectl port-forward` described in the previous sectionn but only change the namespace you are targeting with the command.
-
-We should give the full command here as well. If you have the earlier port-forwarding please change the port to something else or else continue.
-
-Quick way to check is to run the command as is. If it fails change the port :-)
-```bash
-kubectl port-forward -n $PREFIX-demo-secure $(kubectl get po -n $PREFIX-demo-secure --output=jsonpath={.items..metadata.name} -l app=backend) --address 0.0.0.0 8888:8888
-```
+You can verify the secure verison of the application utilizing the same method of `kubectl port-forward` described in the previous sectionn but only change the namespace you are targeting with the command and also the `--context` flag.
 
 ### Bookinfo Application
 The bookinfo application is also going to be deployed to the 2 private cloud kubernetes clusters that are part of the "Secure" zone.
 
-1 - Ensure your kube context is targeted the `private cloud east` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
+1 - Deploy the application the appliction and Istio IngressGateway using `kubectl`.
 
 ```bash
-envsubst < 00-App-Deployment/private-east/bookinfo-multicluster.yaml | kubectl apply -f -
+envsubst < 00-App-Deployment/private-east/bookinfo-multicluster.yaml | kubectl --context private-east apply -f -
+envsubst < 00-App-Deployment/private-west/bookinfo-multicluster.yaml | kubectl --context private-west apply -f -
 ```
 
 If you inspect the deployment file `00-App-Deployment/private-east/bookinfo-multicluster.yaml` you'll note that this created a bookinfo namespace, deployed the bookinfo microservices, and also created an Istio IngressGateway.  
@@ -163,28 +114,22 @@ If you inspect the deployment file `00-App-Deployment/private-east/bookinfo-mult
 Since we have not made any mesh configurations we cannot consume our service externally.  However, we can use the frontend of the secure sample app we previously deployed to test the bookend details service.  Execute the same command as before to port-forward:
 
 ```bash
-kubectl port-forward -n $PREFIX-demo-secure $(kubectl get po -n $PREFIX-demo-secure --output=jsonpath={.items..metadata.name} -l app=frontend) --address 0.0.0.0 8888:8888
+kubectl --context private-east port-forward -n $PREFIX-demo-secure $(kubectl --context private-east get po -n $PREFIX-demo-secure --output=jsonpath={.items..metadata.name} -l app=frontend) --address 0.0.0.0 8888:8888
 ```
 
 Open your browser and navigate to `<JUMPHOST EXTERNAL IP>:8888`.  This time enter `details.<PREFIX>-bookinfo:9080/details/1` in the Backend HTTP URL text box and submit the request.  Replace `<PREFIX>` with the value you have been using during this workshop for your env prefix.  This will cause the frontend microservice to call to the details microservice over the service mesh and return the display the response via the frontend app.
 
 ![Base Diagram](../images/01-bookinfo.png)
 
-2 - Follow the exact same process to deploy the full application into the private west cluster.  Ensure your kube context is targeted the `private west` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
-
-```bash
-envsubst < 00-App-Deployment/private-west/bookinfo-multicluster.yaml | kubectl apply -f -
-```
-
-You can verify the application utilizing the same method of `kubectl port-forward` described in the previous section.  You can call the details service as a backend or view the Bookinfo UI by entering `productpage.<PREFIX>-bookinfo:9080`
+You can also view the Bookinfo UI by entering `productpage.<PREFIX>-bookinfo:9080` 
 
 ### DMZ Gateways Deployment
 Lastly, in preparation for connecting our private clusters with clusters in the public cloud securely via a DMZ cluster that is also part of the global service mesh, we will deploy a gateway to facilitate this mesh traffic flow.  
 
 ![Base Diagram](../images/01-multi-cloud.png)
 
-1 - Ensure your kube context is targeted the `DMZ` cluster.  Deploy the application the appliction and Istio IngressGateway using `kubectl`.
+1 - Deploy the appliction and Istio IngressGateway using `kubectl` to the DMZ cluster:
 
 ```bash
-envsubst < 00-App-Deployment/dmz/cluster-t1.yaml | kubectl apply -f -
+envsubst < 00-App-Deployment/dmz/cluster-t1.yaml | kubectl --context dmz apply -f -
 ```

@@ -6,15 +6,15 @@ It is beyond the scope of this workshop to explain the ins and outs of creating 
 
 There are a few ways to load a binary into the Envoy proxy, for instance from a remote download location.  However, for simplicity we will use a `ConfigMap` that gets mounted into a volume on the Envoy sidecar proxy.
 
-- First we need to create the `ConfigMap` that contains our binary.  We will be configuring this in the Public Cloud East cluster, our insecure application, so ensure that your kubecontext is pointed to the public east cluster.  Then use the kubectl CLI to create the config map from a file:
+- First we need to create the `ConfigMap` that contains our binary.  We will be configuring this in the `public-east` cluster, our insecure application.  Use the kubectl CLI to create the config map from a file:
 
 ```bash
-kubectl create cm http-filter-example -n $PREFIX-demo-insecure --from-file=06-Envoy/wasm/header-filter/main.wasm
+kubectl --context public-east create cm http-filter-example -n $PREFIX-demo-insecure --from-file=06-Envoy/wasm/header-filter/main.wasm
 ```
 - Next we will patch our frontend deployment to load data in the config map into a container volume:
 
 ```bash
-kubectl patch deployment frontend -n $PREFIX-demo-insecure --patch "$(cat 06-Envoy/patch.yaml)" 
+kubectl --context public-east patch deployment frontend -n $PREFIX-demo-insecure --patch "$(cat 06-Envoy/patch.yaml)" 
 ```
 
 This will force a rolling restart of our frontend pod.  Inspect the file `06-Envoy/patch.yaml`.  You'll note that patch is adding a few annotations to the Envoy sidecar pods this deployment creates that will create a userVolume at a specific location, `/var/local/lib/wasm-filters`, that contains the binary data of our `ConfigMap`.
@@ -30,7 +30,7 @@ spec:
 
 - Lastly, we need to create the `EnvoyFilter`, which is the configuration object that loads the extension into Envoy and places it in a specific location in the filter chain execution.
 ```bash
-envsubst < 06-Envoy/filter.yaml | kubectl apply -f -
+envsubst < 06-Envoy/filter.yaml | kubectl --context public-east apply -f -
 ```
 
 If you inspect the file `06-Envoy/filter.yaml` you'll be able to gather the general gist of what is taking place.  First, we are instructing Envoy to execute our filter to the sidecar's `http_connection_manager`.

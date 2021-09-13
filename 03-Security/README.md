@@ -59,9 +59,9 @@ It will take a few seconds for the config to get distributed to all the clusters
 
 If you really want to dig into the details of how this worked, we can look into the `ServiceEntries` that were distributed across the global mesh. 
 
-1.  First change your kubecontext to the Public Cloud West cluster.  Look at the `ServiceEntry`, that was distributed and facilitates the Public Cloud -> DMZ communication, using the `kubectl describe` command:
+1.  First we'll look at the configuration that was distributed to the `public-west` cluster.  Look at the `ServiceEntry`, that was distributed and facilitates the Public Cloud -> DMZ communication, using the `kubectl describe` command:
 ```bash
-kubectl describe se -n xcp-multicluster gateway-west-secure-$PREFIX-private-mesh
+kubectl --context public-west describe se -n xcp-multicluster gateway-west-secure-$PREFIX-private-mesh
 ```
 
 ```yaml
@@ -91,9 +91,9 @@ Spec:
 
 You'll note that the mesh configuration delivered to the Public Cloud West clusters identifies the route for `west.secure.$PREFIX.private.mesh` (`west.secure.abz.private.mesh` in my example) to connect via a `remoteGateway` located in a `network` that we've tagged as DMZ in our topology, and it will transit via a mesh internal port of `15443` via mTLS communication.
 
-- Now change your kubecontext to the DMZ cluster and look at the same `ServiceEntry` using the exact same `kubectl describe` command:
+- Now lets look at the same `ServiceEntry` using the exact same `kubectl describe` command, but look at the configuration in the `dmz` cluster:
 ```bash
-kubectl describe se -n xcp-multicluster gateway-west-secure-$PREFIX-private-mesh
+kubectl --context dmz describe se -n xcp-multicluster gateway-west-secure-$PREFIX-private-mesh
 ```
 ```yaml
 Spec:
