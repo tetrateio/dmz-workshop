@@ -1,9 +1,9 @@
 # Overview
 One of the big benefits of a Service Mesh is the ability to gain insight into an application's behavior by collecting metrics, logs, and traces that are captured at the Envoy sidecar.  In this lab we will see how TSB can assist application owners in debugging and troubleshooting application issues.
 
-## Deploy the application
+## Deploy the Application
 
-- First we will need to deploy another helper application that can be used to simulate a misbehaving application and also demonstrate a more complex chain of microservices that call each other.  We will be configuring this in the `public-east` cluster, our insecure application.  Deploy the sample proxy application using `kubectl apply`:
+- First we will need to deploy another helper application that can be used to simulate a misbehaving application and also demonstrate a more complex chain of microservices that call each other.  We will be configuring this in the `public-east` cluster, our insecure cluster.  Deploy the sample proxy application using `kubectl apply`:
 
 ```bash
 SVCNAME=svca envsubst < 07-Debugging/00-app.yaml | kubectl --context public-east apply -f -
@@ -28,7 +28,7 @@ curl https://insecure.public.$PREFIX.cloud.zwickey.net/proxy/\?url\=svcb%2Flaten
 
 ![Base Diagram](../images/07-app-error.png)
 
-## Troubleshoot using TSB
+## Troubleshoot Using TSB
 Now lets utilize the TSB applicatoion to troubleshoot and debug our application.  If you don't already have it open, navigate a new browser tab to `https://tsb.demo.zwickey.net/admin/login`.  Select `Log in with OIDC` and when prompted enter your TSB credentials.  These can be found in the shared google sheet that you obtained jumpbox information from.  Once logged you will be routed to the Dashboard view.  You'll want to limit the services displayed to just the services we've been recently invoking.  Click the `SELECT CLUSTERS-NAMESPACES` button and select clusters/namespaces for `<PREFIX>-demo-insecure`, which is in the `cloud-east` cluster.
 
 ![Base Diagram](../images/07-select.png)
@@ -37,7 +37,7 @@ Now lets utilize the TSB applicatoion to troubleshoot and debug our application.
 
 ![Base Diagram](../images/07-trouble1.png)
 
-In our scenario `svcb` was configured to have latency and `svcc` was configured to return 500 HTTP  response codes errors for a portion of requests.  Click on the icon for `svcc` and you'll note we can view detailed R.E.D Metrics: Response, Error Rate, and Duration/Latency.  Addiotionally, this information is aggregated by API endpoint.
+In our scenario `svcb` was configured to have latency and `svcc` was configured to return 500 HTTP  response codes errors for a portion of requests.  Click on the icon for `svcc` and you'll note we can view detailed R.E.D Metrics: Response, Error Rate, and Duration/Latency.  Additionally, this information is aggregated by API endpoint.
 
 ![Base Diagram](../images/07-trouble2.png)
 
@@ -47,7 +47,7 @@ In our scenario `svcb` was configured to have latency and `svcc` was configured 
 
 - Imagine that you simply had a report that "The Frontend service is slow and has errors".  This view can help pinpoint which microservice has errors.   Distributed Tracing will also assist if it is not immediately evident which microservice is the culprit.  On the far right-hand side of the screen click on the `Trace` button for our Frontend service.
 
-This opens up a view of traces that are being collected in the system.  Any trace displayed that has the duration highlighted in red represents a request that resulted in a non-200 HTTP Response Code.  You can limit the traces displayed to only error traces by changing the value in the `display` text box or by selecting a specific http response code filter in the Status Code drop down.  However, we do not have many traces to it should be easy to find and error trace.  Once you do, click the `Go` button to view the trace details.
+This opens up a view of traces that are being collected in the system.  Any trace displayed that has the duration highlighted in red represents a request that resulted in a non-200 HTTP Response Code.  You can limit the traces displayed to only error traces by changing the value in the `Display` text box or by selecting a specific http response code filter in the `Status Code` drop down.  However, we do not have many traces so it should be easy to find an error trace.  Once you do, click the `Go` button to view the trace details.
 
 ![Base Diagram](../images/07-trouble4.png)
 
