@@ -11,16 +11,16 @@ The target state infrastucture architecture is comprised of 5 Kubernetes cluster
 ## Workshop Topics
 IMPORTANT: Each new exercise builds upon the preceding lab, so please do not skip around the labs!
 
-[Tetrate Overview](https://docs.google.com/presentation/d/11VD8G8uFDSjRqtPNJmxZUND7hlc3kiY6bGNhNRBxbJ8/edit#slide=id.gb61fe1c3b5_0_0)
+[Tetrate Overview](https://docs.google.com/presentation/d/1UewLG-Y8E_EosC4vLd9jq7VJagaq6jQLzzX9b3GiBI8/edit#slide=id.ge82d745ba0_0_0)
 
 - Deploy Applications: [Lab](00-App-Deployment/README.md)
-- Setup Multi-Tenancy: [Slides](https://docs.google.com/presentation/d/11VD8G8uFDSjRqtPNJmxZUND7hlc3kiY6bGNhNRBxbJ8/edit#slide=id.ge82d745ba0_0_716) [Lab](01-Tenancy/README.md)
+- Setup Multi-Tenancy: [Slides](https://docs.google.com/presentation/d/1UewLG-Y8E_EosC4vLd9jq7VJagaq6jQLzzX9b3GiBI8/edit#slide=id.ge82d745ba0_0_716) [Lab](01-Tenancy/README.md)
 - Application Config: [Lab](02-App-Config/README.md)
-- Security Policies: [Slides](https://docs.google.com/presentation/d/11VD8G8uFDSjRqtPNJmxZUND7hlc3kiY6bGNhNRBxbJ8/edit#slide=id.ge82d745ba0_0_737) [Lab](03-Security/README.md)
-- Legacy VM Workloads: [Slides](https://docs.google.com/presentation/d/11VD8G8uFDSjRqtPNJmxZUND7hlc3kiY6bGNhNRBxbJ8/edit#slide=id.ge82d745ba0_0_731) [Lab](04-VM/README.md)
-- Multi-Cloud & Multi-Cluster Traffic Mgmt: [Slides](https://docs.google.com/presentation/d/11VD8G8uFDSjRqtPNJmxZUND7hlc3kiY6bGNhNRBxbJ8/edit#slide=id.ge82d745ba0_0_731) [Lab](05-LB/README.md)
-- Envoy Filters: [Slides](https://docs.google.com/presentation/d/11VD8G8uFDSjRqtPNJmxZUND7hlc3kiY6bGNhNRBxbJ8/edit#slide=id.ge82d745ba0_0_731) [Lab](06-Envoy/README.md)
-- Application Debugging: [Slides](https://docs.google.com/presentation/d/11VD8G8uFDSjRqtPNJmxZUND7hlc3kiY6bGNhNRBxbJ8/edit#slide=id.ge82d745ba0_0_743) [Lab](07-Debugging/README.md)
+- Security Policies: [Slides](https://docs.google.com/presentation/d/1UewLG-Y8E_EosC4vLd9jq7VJagaq6jQLzzX9b3GiBI8/edit#slide=id.ge82d745ba0_0_737) [Lab](03-Security/README.md)
+- Legacy VM Workloads: [Slides](https://docs.google.com/presentation/d/1UewLG-Y8E_EosC4vLd9jq7VJagaq6jQLzzX9b3GiBI8/edit#slide=id.ge82d745ba0_0_737) [Lab](04-VM/README.md)
+- Multi-Cloud & Multi-Cluster Traffic Mgmt: [Slides](https://docs.google.com/presentation/d/1UewLG-Y8E_EosC4vLd9jq7VJagaq6jQLzzX9b3GiBI8/edit#slide=id.ge82d745ba0_0_731) [Lab](05-LB/README.md)
+- Envoy Filters: [Slides](https://docs.google.com/presentation/d/1UewLG-Y8E_EosC4vLd9jq7VJagaq6jQLzzX9b3GiBI8/edit#slide=id.ge82d745ba0_0_731) [Lab](06-Envoy/README.md)
+- Application Debugging: [Slides](https://docs.google.com/presentation/d/1UewLG-Y8E_EosC4vLd9jq7VJagaq6jQLzzX9b3GiBI8/edit#slide=id.ge82d745ba0_0_743) [Lab](07-Debugging/README.md)
 
 ## Environment Access Information
 The majority of the workshop will be executed via a jumpbox that has all the prerequisite CLIs installed.  Using the shared google doc provided by, *checkout* a jumpbox by adding your name to the sheet in the `Reserved Workshop User` column.  This shared document has TSB user/pwd and IP address for your jumpbox.

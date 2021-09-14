@@ -43,7 +43,7 @@ workloadSelector:
 You can easily verify that this maps to the correct Envoy gateway pod using a simple `kubectl command`.  Ensure your kubecontext is pointed at the public cloud west cluster.  Take note of the patching `app=` label.
 
 ```bash
-kubectl get po -n $PREFIX-demo-secure -l istio=ingressgateway --show-labels
+kubectl --context public-west get po -n $PREFIX-demo-secure -l istio=ingressgateway --show-labels
 ```
 
 ```bash
