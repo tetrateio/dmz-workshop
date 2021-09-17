@@ -12,7 +12,7 @@ echo token: $TOKEN
 
 declare -a arr=("foxy" "have" "mill" "book" "lean" "dorm" "pool" "cane" "rack" "date" "timmers"
                 "wear" "deer" "bean" "duck" "year" "loan" "pray" "bulb" "jump" "sick" "adam"
-                "pity" "spin" "cook" "pump" "dawn" "rush" "term" "axis" "loss" "line"
+                "pity" "spin" "cook" "pump" "dawn" "rush" "term" "axis" "loss" "line" "abz"
                 "rank" "thin" "wage" "folk" "gear" "fade" "pace" "bike" "grip" "slap" "fool" "foo"
                 )
 
