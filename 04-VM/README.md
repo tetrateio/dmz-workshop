@@ -138,7 +138,7 @@ This configuration file is nearly identical to the application configuration we 
     port: 80
 ```
 
-8. Now we can test our VM service via the mesh.  We will test via the frontend application that is running in our Private West cluster.  Open a browser and navigate to secure.west.private.$PREFIX.cloud.zwickey.net (replace $PREFIX with your actual prefix).  In the Backend HTTP URL field enter the URL route we just configured, which should be in the form of vm.secure.$PREFIX.private.mesh.  We should see a response from our VM backend, which is serving a cute puppy pic!
+8. Now we can test our VM service via the mesh.  We will test via the frontend application that is running in our Private West cluster.  Open a browser and navigate to https://secure.west.private.$PREFIX.cloud.zwickey.net (replace $PREFIX with your actual prefix and make sure you're using https not http).  In the Backend HTTP URL field enter the URL route we just configured, which should be in the form of vm.secure.$PREFIX.private.mesh.  We should see a response from our VM backend, which is serving a cute puppy pic!
 
 ![Base Diagram](../images/04-backend.png)
 
