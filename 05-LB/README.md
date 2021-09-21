@@ -58,7 +58,7 @@ Additionally, you'll note an endpoint entry for `details.secure.$PREFIX.private.
           port: 9080
 ```
 
-- To test, open a browser and navigate to https://bookinfo.$PREFIX.cloud.zwickey.net/productpage (replace $PREFIX with your actual prefix).  On the bottom of the page click the `Normal User` link.  You should see the Bookinfo application displayed, which is actually served via 5 different microservices.  Refresh the page about a dozen times to ensure you have traffic load balanced across all Kubernetes clusters.
+- To test, open a browser and navigate to https://bookinfo.$PREFIX.cloud.zwickey.net/productpage (replace $PREFIX with your actual prefix).  On the bottom of the page click the `Normal User` link.  You should see the Bookinfo application displayed, which is actually served via 5 different microservices.  *Refresh the page about a dozen times* to ensure you have traffic load balanced across all Kubernetes clusters.
 
 ![Base Diagram](../images/05-bookinfo.png)
 
@@ -78,7 +78,7 @@ Take note of the fact that the Tier1 Gateway is loadbalancing requests across bo
 kubectl --context private-east scale deployment details-v1 --replicas 0 -n $PREFIX-bookinfo
 ```
 
-Wait a few seconds for the pods to completely terminate.  Go back to the browser window that is open to the bookinfo application (`bookinfo.$PREFIX.cloud.zwickey.net`).   Refresh the page another 10-15 times.  You'll note you don't get any errors.  This is because immediately the mesh identifies the service that is unavailable and shifts requests to the details service to the healthy instances in the private west cluster.
+Wait a few seconds for the pods to completely terminate.  Go back to the browser window that is open to the bookinfo application (`bookinfo.$PREFIX.cloud.zwickey.net`).   *Refresh the page another 10-15 times.*  You'll note you don't get any errors.  This is because immediately the mesh identifies the service that is unavailable and shifts requests to the details service to the healthy instances in the private west cluster.
 
 - Let's see how this has changed our topology view.  Refresh the browser that has the TSB application open.  You'll now see a line representing traffic flowing from the productpage within the private east cluster to the gateway, and subsequently the details service, in the private west cluster.  
 
