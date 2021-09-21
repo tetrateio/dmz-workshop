@@ -62,8 +62,8 @@ Secondly, we can see that the `svcc` http GET request returned an 500 error code
 - Let remove the simulated failures for the microservices.  Execute the following `curl` commands:
 
 ```bash
-curl https://insecure.public.$PREFIX.cloud.zwickey.net/proxy/\?url\=svcc%2Ferrors%2F0\&auth\=\&cachebuster\=123
-curl https://insecure.public.$PREFIX.cloud.zwickey.net/proxy/\?url\=svcb%2Flatency%2F0\&auth\=\&cachebuster\=456
+curl -Ik https://insecure.public.$PREFIX.cloud.zwickey.net/proxy/\?url\=svcc%2Ferrors%2F0\&auth\=\&cachebuster\=123
+curl -Ik https://insecure.public.$PREFIX.cloud.zwickey.net/proxy/\?url\=svcb%2Flatency%2F0\&auth\=\&cachebuster\=456
 ```
 
 - Return to the browser tab that has the Frontend application open and refresh 10-15 times.  You should no longer receive any HTTP errors and the latency should be gone.
