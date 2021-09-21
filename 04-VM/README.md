@@ -225,7 +225,7 @@ This configuration file is nearly identical to the application configuration we 
           port: 8080
 ```
 
-5. Now we can test our frontend VM service and access other containerized services via the Global Mesh.  Open a browser and navigate to vm.secure.private.$PREFIX.cloud.zwickey.net (replace $PREFIX with your actual prefix).  We'll test routing from this VM across to our Private West cluster and access the backend.  In the Backend HTTP URL field enter the URL for the private west backend: west.secure.$PREFIX.private.mesh
+5. Now we can test our frontend VM service and access other containerized services via the Global Mesh.  Open a browser and navigate to https://vm.secure.private.$PREFIX.cloud.zwickey.net (replace $PREFIX with your actual prefix and https:// is used).  We'll test routing from this VM across to our Private West cluster and access the backend.  In the Backend HTTP URL field enter the URL for the private west backend: west.secure.$PREFIX.private.mesh
 
 You should receive a response from the backend with the cat picture!
 
