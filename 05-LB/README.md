@@ -58,7 +58,7 @@ Additionally, you'll note an endpoint entry for `details.secure.$PREFIX.private.
           port: 9080
 ```
 
-- To test, open a browser and navigate to bookinfo.$PREFIX.cloud.zwickey.net (replace $PREFIX with your actual prefix).  On the bottom of the page click the `Normal User` link.  You should see the Bookinfo application displayed, which is actually served via 5 different microservices.  Refresh the page about a dozen times to ensure you have traffic load balanced across all Kubernetes clusters.
+- To test, open a browser and navigate to https://bookinfo.$PREFIX.cloud.zwickey.net (replace $PREFIX with your actual prefix).  On the bottom of the page click the `Normal User` link.  You should see the Bookinfo application displayed, which is actually served via 5 different microservices.  Refresh the page about a dozen times to ensure you have traffic load balanced across all Kubernetes clusters.
 
 ![Base Diagram](../images/05-bookinfo.png)
 
