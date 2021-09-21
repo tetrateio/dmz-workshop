@@ -39,6 +39,7 @@ spec:
     - user: organizations/tetrate/users/46fd71ef-4a5e-4fa0-8935-042c79a0585a
     - user: organizations/tetrate/users/5858623e-9acb-47b8-85cb-6821437a0e79
     - user: organizations/tetrate/users/19f56555-b2c7-453e-90b8-7d8d252797fe
+    - user: organizations/tetrate/users/33402fa1-c4aa-4ac6-9c3a-8e7bbb4c959d
     - user: organizations/tetrate/users/bb1bfda5-4b54-445d-a236-053b67443dd4
     - user: organizations/tetrate/users/d5ebaf70-81ef-4096-b39d-237d8e0bce49
     - user: organizations/tetrate/users/0b50bfab-a437-4321-bea2-d7e547921395
