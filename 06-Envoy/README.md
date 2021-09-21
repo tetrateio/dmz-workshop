@@ -74,7 +74,7 @@ patch:
 - Now we can test using a simple `curl` command to the frontend application running in the insecure cluster:
 
 ```bash
-curl -v -X HEAD https://insecure.public.$PREFIX.cloud.zwickey.net/  
+curl -vk -X HEAD https://insecure.public.$PREFIX.cloud.zwickey.net/  
 ```
 
 You'll note in the verbose response you see the request and response headers in the HTTP `HEAD` request, and we now see our new `tetrate` header added by the `EnvoyFilter`:
