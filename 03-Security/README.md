@@ -53,7 +53,11 @@ internalServers:
     name: west-private
 ``` 
 
-It will take a few seconds for the config to get distributed to all the clusters.  Click the back button, which will ensure you don't get a cached page, and try the request again.  You should now receive a response from the Backend application running in the Private West cluster.
+It will take a few seconds for the config to get distributed to all the clusters.  Click the back button, which will ensure you don't get a cached page, and try the request again.  You should now receive a response from the Backend application running in the Private West cluster. 
+(if you're not getting expected behavoir - please check if the last step of Lab 00 - deploying Tier1 GW is completed:
+```bash
+envsubst < 00-App-Deployment/dmz/cluster-t1.yaml | kubectl --context dmz apply -f -
+```
 
 ![Base Diagram](../images/03-success.png)
 
