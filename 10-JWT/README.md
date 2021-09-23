@@ -8,7 +8,7 @@ We will configure Authentication and Authorization settings to enforce this.
 
 ## Export the user ID that will be used in access policies
 
-In the different access policies we'll be applying, we will be enforcing a particular Subject in the JWT token. The Identity Provider generates tokens with the UUID of the user in the `sub` claim, so before starting this lab, let's make sure we have the right value for our user exported as an environment variable:
+In the different access policies we'll be applying, we will be enforcing a particular Subject in the JWT token. The Identity Provider generates tokens with the UUID of the user in the `sub` claim, so before starting this lab, let's make sure we have the right value for our user exported in the `$TCTL_USERID` environment variable:
 
 ```bash
 source 10-JWT/set-userid.sh
