@@ -1,7 +1,7 @@
 # Overview
 
 In the previous Security lab, we focused on perimeter security and configured policies to restrict access based on the Workspace.
-In this lab we will secure the public ingress and enforce user authentication so that only properly authenticated users taht have the
+In this lab we will secure the public ingress and enforce user authentication so that only properly authenticated users that have the
 right permissions can use the application.
 
 We will configure Authentication and Authorization settings to enforce this.
@@ -24,7 +24,7 @@ Our application ingress for the secure applications does not contain any policy 
 envsubst < 10-JWT/01-tsb-cloud-west-jwt.yaml | tctl apply -f -   
 ``` 
 
-Inspect the file `10-JWT/01-tsb-cloud-west-jwt`.  The important pieces areis the `authentication` and `authorization` sections:
+Inspect the file `10-JWT/01-tsb-cloud-west-jwt`.  The important pieces are in the `authentication` and `authorization` sections:
 
 ```yaml
 authentication:
@@ -43,13 +43,13 @@ authorization:
           - paths: ["*"]
 ```
 
-In the `authentication` section we are configuring how JWT tokens are coing to be validated. There we configure the issuer for the tokens and the keystore with the keys to be used to validate the token signature.
+In the `authentication` section we are configuring how JWT tokens are going to be validated. There we configure the issuer for the tokens and the keystore with the keys to be used to validate the token signature.
 
 In the `authorization` section we configure the AuthZ rules we want to apply to incoming traffic. In this example we will:
 
 * Enforce the configured rule for all requests (`paths: ["*"]`).
 * Require tokens to be issued by the configured issuer.
-* Require the `sub` claim in the token to have teh value of `$TCTL_USERID`.
+* Require the `sub` claim in the token to have the value of `$TCTL_USERID`.
 
 Changes may take some seconds to propagate. Once they are propagated you can check the `AuthorizationPolicy` that has been generated for the secure ingress with:
 
@@ -128,13 +128,13 @@ Now we have seen how the user has been validated, let's see how we can enforce a
 
 ### Checking what happens when additional claims are not met
 
-We will apply a policy that requires the token to contain a `group: admins` claim. The tokens issued for our user do not contain that claim, so access should be deined after applying the policy.
+We will apply a policy that requires the token to contain a `group: admins` claim. The tokens issued for our user do not contain that claim, so access should be denied after applying the policy.
 
 ```bash
 envsubst < 10-JWT/02-tsb-cloud-west-jwt-claims-fail.yaml | tctl apply -f -   
 ```
 
-The important parts of the new policy is the following:
+The important part of the new policy is the following:
 
 ```yaml
 rules:
@@ -149,9 +149,9 @@ rules:
     - paths: ["*"]
 ```
 
-Note the presence of the `other` element. It allows setting other claims to be required in the JWT tokens that are not necessary well-known JWT claims.
+Note the presence of the `other` element. It allows setting other claims to be required in the JWT tokens that are not necessarily well-known JWT claims.
 
-Wait a few seconds until the changes tot he policy have propagated, and inspect the contents of the policy again:
+Wait a few seconds until the changes to the policy have propagated, and inspect the contents of the policy again:
 
 ```bash
 kubectl --context public-west -n $PREFIX-demo-secure get authorizationpolicy secure-gateway-mesh-external -o yaml
@@ -185,7 +185,7 @@ Now let's configure a policy with a claim that actually exists in the token, suc
 envsubst < 10-JWT/03-tsb-cloud-west-jwt-claims-ok.yaml | tctl apply -f -   
 ```
 
-Wait a few seconds until the changes tot he policy have propagated, and inspect the contents of the policy again:
+Wait a few seconds until the changes to the policy have propagated, and inspect the contents of the policy again:
 
 ```bash
 kubectl --context public-west -n $PREFIX-demo-secure get authorizationpolicy secure-gateway-mesh-external -o yaml
@@ -211,7 +211,7 @@ You will see again the HTML contents of the Secure App frontend.
 
 ## Cleanup
 
-Finally, let's remove the JWT policy to leave teh Secure App endpoing accessible for other Labs:
+Finally, let's remove the JWT policy to leave the Secure App endpoint accessible for other Labs:
 
 ```bash
 envsubst < 10-JWT/04-tsb-cloud-west-jwt-reset.yaml | tctl apply -f -   
