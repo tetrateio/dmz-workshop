@@ -1,0 +1,48 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: secure-gateway
+  group: secure-gateway-cloud
+  workspace: $PREFIX-secure-app
+  tenant: $PREFIX-tetrate
+  organization: tetrate
+spec:
+  workloadSelector:
+    namespace: $PREFIX-demo-secure
+    labels:
+      app: $PREFIX-tsb-gateway
+  http:
+    - name: secure-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-certs
+      hostname: secure.public.$PREFIX.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-demo-secure/frontend.$PREFIX-demo-secure.svc.cluster.local"
+              port: 8888
+      authentication:
+        jwt:
+          issuer: "https://keycloak.demo.zwickey.net/auth/realms/tetrate"
+          jwksUri: "https://keycloak.demo.zwickey.net/auth/realms/tetrate/protocol/openid-connect/certs"
+      authorization:
+        local:
+          rules:
+            - name: only-$PREFIX
+              from:
+                - jwt:
+                    sub: "$TCTL_USERID"
+                    iss: "https://keycloak.demo.zwickey.net/auth/realms/tetrate"
+              to:
+                - paths: ["*"]
+    - name: secure-backend-internal
+      port: 80
+      hostname: secure.$PREFIX.public.mesh
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-demo-secure/backend.$PREFIX-demo-secure.svc.cluster.local"
+              port: 80
