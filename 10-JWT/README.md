@@ -6,6 +6,14 @@ right permissions can use the application.
 
 We will configure Authentication and Authorization settings to enforce this.
 
+## Update to the latest version of the workshop
+
+Before starting, make sure you have the latest version of the workshop:
+
+```bash
+git pull
+```
+
 ## Export the user ID that will be used in access policies
 
 In the different access policies we'll be applying, we will be enforcing a particular Subject in the JWT token. The Identity Provider generates tokens with the UUID of the user in the `sub` claim, so before starting this lab, let's make sure we have the right value for our user exported in the `$TCTL_USERID` environment variable:
@@ -120,7 +128,9 @@ Now you can try access the Secure application again, by sending the `$JWT_TOKEN`
 curl -k https://secure.public.${PREFIX}.cloud.zwickey.net -H "Authorization: Bearer ${JWT_TOKEN}"
 ```
 
-You will see the HTML contents of the Secure App frontend. If instead you see a `token expired` error, you can run again the `source 10-JWT/get-token.sh` to get a new token.
+You will see the HTML contents of the Secure App frontend.
+
+**_If at some point you see a `Jwt is expired` error, you can run again the `source 10-JWT/get-token.sh` command to get a new token._**
 
 ## Enforcing access with additional claims
 
@@ -197,7 +207,7 @@ You will see the JWT rule has a new condition that will enforce the presence of 
 when:
 - key: request.auth.claims[preferred_username]
   values:
-  - $PREFIX
+  - nacx
 ```
 
 Let's try accessing the app again:
