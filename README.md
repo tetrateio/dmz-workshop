@@ -28,44 +28,41 @@ The majority of the workshop will be executed via a jumpbox that has all the pre
 
 - Access jumpbox using the private key provided by tetrate:
 
-Please run the following command to change permissions for file. 
-```bash
-chmod 400 abz.pem
-```
- 
-```bash
-ssh -i abz.pem ec2-user@<JUMPBOX IP ADDRESS>
-```
-- Throughout the workshop you will be required to have an environment variable set in your jumpbox session named `PREFIX`.  This will be used to ensure your various Kubernetes objects and TSB objects have unique names.  The PREFIX assigned to you is found in the shared Google docs in the `Prefix` column of the jumpbox you checked out.  Export this env var:
-```bash
-export PREFIX=<YOUR JUIMPBOX PREFIX>
-```
+  Please run the following command to change permissions for file.
+  ```bash
+  chmod 400 abz.pem
+  ```
 
+  ```bash
+  ssh -i abz.pem ec2-user@<JUMPBOX IP ADDRESS>
+  ```
+- Throughout the workshop you will be required to have an environment variable set in your jumpbox session named `PREFIX`.  This will be used to ensure your various Kubernetes objects and TSB objects have unique names.  The PREFIX assigned to you is found in the shared Google docs in the `Prefix` column of the jumpbox you checked out.  Export this env var:
+  ```bash
+  export PREFIX=<YOUR JUMPBOX PREFIX>
+  ```
 
 - All labs will assume you have changed directories to the workshop git directory, which has already been checked out onto the jumpbox.  This is found in the `dmz-workshop` directory.  Also, it wouldn't hurt to doublecheck that you have the latest code checked out, just in case there are last minute changes that were committed after the jumpbox was created.
-```bash
-cd ~/dmz-workshop
-git pull
-```
+  ```bash
+  cd ~/dmz-workshop
+  git pull
+  ```
 
-- The jumpbox should already be logged into each kubernetes cluster.  If you receive a message that you are not logged in you can execute the 2 helper scripts on the jumpbox that will log you in.
-```bash
-~/login-cloud.sh
-~/login-openshift.sh
+- The jumpbox should already be logged into each kubernetes cluster.  If you receive a message that you are not logged in you can execute the two helper scripts on the jumpbox that will log you in.
+  ```bash
+  ~/login-cloud.sh
+  ~/login-openshift.sh
+  ```
 
-```
+- During your workshop you will be utilizing the TCTL CLI.  If you receive a message that you are not logged in, you can execute the helper script on the jumpbox that will log you in.
+  ```bash
+  ~/login-tctl.sh
+  ```
 
-- During your workshop you will be utilizing the TCTL CLI.  If you receive a message that you are not logged in you can execute the helper script on the jumpbox that will log you in.
-```bash
-~/login-tctl.sh
-
-```
-
-- Each `kubectl` command will contain a `--context` flag that will direct the API request to the correct kubernetes server.  However, at times you may want to change your active kubernetes context to a specific cluster in order to execute ad-hoc `kubectl` commands.  The jumpbox has `kubectx` installed to facilitate this.  You can list contexts by issuing the command `kubectx` and you can change you context with the command `kubectx <CONTEXT NAME>`.  Valid contexts are `public-east`, `public-west`, `private-east`, `private-west`, and `dmz`.
+- Each `kubectl` command will contain a `--context` flag that will direct the API request to the correct kubernetes server.  However, at times you may want to change your active kubernetes context to a specific cluster in order to execute ad-hoc `kubectl` commands.  The jumpbox has `kubectx` installed to facilitate this.  You can list contexts by issuing the command `kubectx` and you can change your context with the command `kubectx <CONTEXT NAME>`.  Valid contexts are `public-east`, `public-west`, `private-east`, `private-west`, and `dmz`.
 
 ## Applications
 
-During this workshop we will be modeling 3 different applications that allow for various architecture and security patterns that span Multi-Cluster and Multi-Cloud.
+During this workshop we will be modeling three different applications that allow for various architecture and security patterns that span Multi-Cluster and Multi-Cloud.
 
 ### Secure Application
 A simple frontend and backend application that allows simple testing of mesh networking and security.  This application spans the Public Cloud West cluster and both on-premises clusters.  This application also has VM versions of the services running in the private east region.
@@ -80,7 +77,7 @@ Identical application to the `Secure Application`, except it is only deployed in
 ![Base Diagram](images/insecure-app-arch.png)
 
 ### Multi-Cluster Bookinfo Application
-This is the canonical [Istio demo application, Bookinfo.](https://istio.io/latest/docs/examples/bookinfo/)  The microservice application displays information about a book, similar to a single catalog entry of an online book store.  This application spans is fully deployed to both on-premises clusters In this manner, we can demonstrate advanced routing and service discovery patterns.
+This is the canonical [Istio demo application, Bookinfo.](https://istio.io/latest/docs/examples/bookinfo/)  The microservice application displays information about a book, similar to a single catalog entry of an online book store.  This application is fully deployed to both on-premises clusters.  In this manner, we can demonstrate advanced routing and service discovery patterns.
 
 ![Base Diagram](images/bookinfo-app.png)
 
