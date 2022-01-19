@@ -28,7 +28,7 @@ The majority of the workshop will be executed via a jumpbox that has all the pre
 
 - Access jumpbox using the private key provided by tetrate:
 
-Please run the follwoing command to change permissions for file. 
+Please run the following command to change permissions for file. 
 ```bash
 chmod 400 abz.pem
 ```
